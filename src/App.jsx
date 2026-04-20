@@ -1,9 +1,12 @@
 import "./App.css";
+import { RouterProvider } from "react-router-dom";
+
+import { router } from "./routes/router";
 
 function App() {
   return (
     <>
-      <h1>This is my zenvy cart app</h1>
+      <RouterProvider router={router} />
     </>
   );
 }
