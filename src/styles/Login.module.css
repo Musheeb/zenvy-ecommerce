@@ -1,0 +1,33 @@
+.container {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.branding {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.zenvyImage {
+  height: 60px;
+  width: auto;
+  opacity: 1;
+}
+
+.loginBox {
+  min-height: 500px;
+  width: 30%;
+  background-color: white;
+}
+
+span {
+  font-size: small;
+  color: #929090;
+}
