@@ -15,19 +15,80 @@
   gap: 5px;
 }
 
-.zenvyImage {
-  height: 60px;
-  width: auto;
-  opacity: 1;
+.zenvyBranding {
+  font-size: larger;
+  font-weight: bolder;
+  color: #2a303d;
 }
 
 .loginBox {
   min-height: 500px;
-  width: 30%;
+  width: 35%;
   background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-span {
+.loginContents {
+  width: 80%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+  gap: 15px;
+  padding: 10px;
+}
+
+.signInText {
+  font-size: larger;
+  margin-bottom: 0;
+}
+
+.signInQuoteText {
+  margin-top: 0;
+  font-size: small;
+}
+
+.labels {
+  font-size: small;
+}
+
+.inputs {
+  width: 100%;
+  height: 30px;
+}
+
+.buttons {
+  width: 100%;
+  cursor: pointer;
+  height: 40px;
+  border: none;
+}
+
+.loginOptionSeparatorText {
+  font-size: small;
+}
+
+.logoAndQuote {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.logoSober {
+  height: 30px;
+  padding-bottom: 7px;
+}
+
+.quote {
+}
+
+.texts {
   font-size: small;
   color: #929090;
 }
