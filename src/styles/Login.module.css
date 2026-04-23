@@ -1,3 +1,7 @@
+p {
+  font-size: small;
+}
+
 .container {
   padding: 10px;
   display: flex;
@@ -33,7 +37,7 @@
 
 .loginContents {
   width: 80%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: flex;
   justify-content: center;
   align-items: start;
@@ -48,17 +52,68 @@
 }
 
 .signInQuoteText {
-  margin-top: 0;
+  margin-top: -10px;
   font-size: small;
 }
 
 .labels {
   font-size: small;
+  margin-bottom: 0;
+  color: #919090;
+}
+
+.passwordLabelForgetPasswordWrapper {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.forgetPassword {
+  margin-left: auto;
+  font-size: 10px;
+  text-decoration: none;
+  color: #304a59;
+  font-weight: bolder;
 }
 
 .inputs {
   width: 100%;
   height: 30px;
+  border: none;
+  border-bottom: 2px solid #c6c6c7;
+  outline: none;
+  margin-top: -12px;
+}
+
+.inputs::placeholder {
+  color: #c8c6c6;
+}
+
+.inputs:focus {
+  border-bottom: 2px solid #304a59;
+}
+
+.inputGroup {
+  width: 100%;
+  /* max-width: 400px; */
+}
+
+.passwordInputWrapper {
+  position: relative;
+}
+
+.passwordInputWrapper input {
+  width: 100%;
+  padding: 10px 35px 10px 5px;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-60%);
+  cursor: pointer;
+  color: #919090;
 }
 
 .buttons {
@@ -66,10 +121,46 @@
   cursor: pointer;
   height: 40px;
   border: none;
+
+  transition: transform 0.2s ease;
+}
+
+.buttons:active {
+  transform: translateY(2px);
+}
+
+.loginButton {
+  background-color: #474747;
+  color: #e2e2e2;
+}
+
+.loginWithGoogleButton {
+  background-color: #d8e3fc;
 }
 
 .loginOptionSeparatorText {
-  font-size: small;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #999;
+  font-size: 12px;
+  width: 100%;
+  /* margin: 20px 0; */
+}
+
+.loginOptionSeparatorText::before,
+.loginOptionSeparatorText::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.loginOptionSeparatorText::before {
+  margin-right: 10px;
+}
+
+.loginOptionSeparatorText::after {
+  margin-left: 10px;
 }
 
 .logoAndQuote {
@@ -85,10 +176,18 @@
   padding-bottom: 7px;
 }
 
-.quote {
+.googleLogo {
+  margin-right: 7px;
+  color: #4285f4;
 }
 
 .texts {
   font-size: small;
   color: #929090;
+}
+
+.signUpLink {
+  text-decoration: none;
+  font-weight: bolder;
+  cursor: pointer;
 }
