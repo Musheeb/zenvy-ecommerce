@@ -4,7 +4,10 @@ import EntryPoint from "../layouts/EntryLayout";
 import AdminLayout from "../layouts/AdminLayout";
 import UserLayout from "../layouts/UserLayout";
 
+import Register from "../pages/Register";
 import Login from "../pages/Login";
+import ForgotPassword from "../pages/ForgotPassword";
+import ResetPassword from "../pages/ResetPassword";
 import AdminDashboard from "../pages/AdminDashboard";
 import UserHome from "../pages/UserHome";
 import PageNotFound from "../pages/PageNotFound";
@@ -15,8 +18,20 @@ export const router = createBrowserRouter([
     element: <EntryPoint />,
     children: [
       {
+        path: "register",
+        element: <Register />,
+      },
+      {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "reset-password",
+        element: <ResetPassword />,
       },
     ],
   },

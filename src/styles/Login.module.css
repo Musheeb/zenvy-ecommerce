@@ -49,6 +49,7 @@ p {
 .signInText {
   font-size: larger;
   margin-bottom: 0;
+  font-weight: 500;
 }
 
 .signInQuoteText {
@@ -60,6 +61,7 @@ p {
   font-size: small;
   margin-bottom: 0;
   color: #919090;
+  font-weight: bolder;
 }
 
 .passwordLabelForgetPasswordWrapper {
@@ -121,6 +123,7 @@ p {
   cursor: pointer;
   height: 40px;
   border: none;
+  font-weight: bolder;
 
   transition: transform 0.2s ease;
 }

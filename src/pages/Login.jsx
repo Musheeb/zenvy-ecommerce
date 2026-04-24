@@ -35,7 +35,9 @@ export default function Login() {
               <label className={styles.labels} htmlFor="password">
                 PASSWORD
               </label>
-              <Link className={styles.forgetPassword}>FORGOT PASSWORD?</Link>
+              <Link to="/forgot-password" className={styles.forgetPassword}>
+                FORGOT PASSWORD?
+              </Link>
             </div>
             <div className={styles.passwordInputWrapper}>
               <input
