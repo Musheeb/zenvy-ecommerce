@@ -3,6 +3,8 @@ import styles from "../styles/Login.module.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { ROUTES } from "../routes/routes";
+
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   function handleShowPassword() {
@@ -35,7 +37,10 @@ export default function Login() {
               <label className={styles.labels} htmlFor="password">
                 PASSWORD
               </label>
-              <Link to="/forgot-password" className={styles.forgetPassword}>
+              <Link
+                to={ROUTES.FORGOT_PASSWORD}
+                className={styles.forgetPassword}
+              >
                 FORGOT PASSWORD?
               </Link>
             </div>
