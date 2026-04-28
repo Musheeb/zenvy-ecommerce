@@ -13,4 +13,6 @@
 
 .link {
   text-decoration: none;
+  color: black;
+  font-weight: 600;
 }

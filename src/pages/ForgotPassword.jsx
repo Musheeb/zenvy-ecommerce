@@ -52,12 +52,14 @@ export default function ForgotPassword() {
             >
               check_circle
             </span>
-            <span
-              className={`material-symbols-outlined ${styles.closePopup}`}
-              onClick={handleClosePopup}
-            >
-              close
-            </span>
+            <div className={styles.closePopupContainer}>
+              <span
+                className={`material-symbols-outlined ${styles.closePopup}`}
+                onClick={handleClosePopup}
+              >
+                close
+              </span>
+            </div>
           </div>
         </div>
       )}
