@@ -80,7 +80,9 @@ export default function Login() {
           </button>
           <p>
             Don't have an account?{" "}
-            <Link className={styles.signUpLink}>Sign Up</Link>
+            <Link to={ROUTES.REGISTER} className={styles.signUpLink}>
+              Sign Up
+            </Link>
           </p>
         </div>
       </div>
