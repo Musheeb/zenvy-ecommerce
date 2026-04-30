@@ -1,4 +1,7 @@
+import { ROUTES } from "../routes/routes";
 import styles from "../styles/Register.module.css";
+
+import { Link } from "react-router-dom";
 
 export default function Register() {
   return (
@@ -21,7 +24,45 @@ export default function Register() {
         </div>
       </div>
       <div className={styles.registerationContent}>
-        <h1>Registeration page</h1>
+        <div>
+          <h2>CREATE ACCOUNT</h2>
+          <p className={styles.createAccountParagraph}>
+            Explore products shaped by purpose and design.
+          </p>
+        </div>
+        <label htmlFor="fullname">FULL NAME</label>
+        <input
+          className={styles.inputsRegistration}
+          type="text"
+          id="fullname"
+          placeholder="JOHN DOE"
+          name="fullname"
+        />
+        <label htmlFor="email">EMAIL ADDRESS</label>
+        <input
+          className={styles.inputsRegistration}
+          type="email"
+          id="email"
+          placeholder="archive@zenvy.com"
+          name="email"
+        />
+        <label htmlFor="password">PASSWORD</label>
+        <input
+          className={`${styles.inputsRegistration} ${styles.passwordInput}`}
+          type="password"
+          id="password"
+          placeholder="********"
+          name="password"
+        />
+        <button className={styles.createAccountButton}>CREATE ACCOUNT</button>
+        <span className={styles.orSignUpWithGoogle}>OR</span>
+        <button className={styles.signUpWithGoogle}>SIGN UP WITH GOOGLE</button>
+        <p className={styles.loginRedictText}>
+          ALREADY HAVE AN ACCOUNT?{" "}
+          <Link to={ROUTES.LOGIN} className={styles.loginLink}>
+            LOGIN
+          </Link>
+        </p>
       </div>
     </div>
   );

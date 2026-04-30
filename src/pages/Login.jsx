@@ -78,7 +78,7 @@ export default function Login() {
             <i className={`fa-brands fa-google ${styles.googleLogo}`}></i>
             LOGIN WITH GOOGLE
           </button>
-          <p>
+          <p className={styles.signUpText}>
             Don't have an account?{" "}
             <Link to={ROUTES.REGISTER} className={styles.signUpLink}>
               Sign Up

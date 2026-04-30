@@ -190,7 +190,13 @@ p {
 }
 
 .signUpLink {
-  text-decoration: none;
+  /* text-decoration: none; */
   font-weight: bolder;
   cursor: pointer;
+  color: black;
+}
+
+.signUpText {
+  width: 100%;
+  text-align: center;
 }
