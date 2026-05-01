@@ -56,7 +56,10 @@ export default function Register() {
         />
         <button className={styles.createAccountButton}>CREATE ACCOUNT</button>
         <span className={styles.orSignUpWithGoogle}>OR</span>
-        <button className={styles.signUpWithGoogle}>SIGN UP WITH GOOGLE</button>
+        <button className={styles.signUpWithGoogle}>
+          <i className={`fa-brands fa-google ${styles.googleLogo}`}></i> SIGN UP
+          WITH GOOGLE
+        </button>
         <p className={styles.loginRedictText}>
           ALREADY HAVE AN ACCOUNT?{" "}
           <Link to={ROUTES.LOGIN} className={styles.loginLink}>

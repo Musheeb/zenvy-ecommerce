@@ -148,6 +148,11 @@ button:active {
   background-color: #afcadc;
 }
 
+.googleLogo {
+  margin-right: 7px;
+  color: #4285f4;
+}
+
 .loginRedictText {
   width: 100%;
   max-width: 500px;

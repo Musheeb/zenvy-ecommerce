@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.zenvy {
+  font-size: larger;
+  font-weight: bolder;
+  color: #2a303d;
+}
+
+.links {
+  text-decoration: none;
+  font-size: large;
+  color: #999;
+}
+
+.icons {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.optionList {
+  display: flex;
+  gap: 10px;
+}
+
+.flexStartPortion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.flexEndPortion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  gap: 10px;
+  margin-right: 10px;
+}
