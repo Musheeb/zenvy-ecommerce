@@ -1,4 +1,4 @@
-import styles from "../styles/AdminDashboard.module.css";
+import styles from "../styles/Admin.module.css";
 import AdminHeader from "../components/AdminHeader";
 import SideBar from "../components/SideBar";
 import { Outlet } from "react-router-dom";

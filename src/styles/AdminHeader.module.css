@@ -8,12 +8,17 @@
   font-size: larger;
   font-weight: bolder;
   color: #2a303d;
+  margin-left: 10px;
 }
 
 .links {
   text-decoration: none;
   font-size: large;
   color: #999;
+}
+
+.links:hover {
+  color: black;
 }
 
 .icons {
