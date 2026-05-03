@@ -1,5 +1,31 @@
 import styles from "../styles/AdminDashboard.module.css";
 
+import ActivityCard from "../components/ActivityCard";
+
+const activityData = [
+  {
+    id: 1,
+    title: "New Order #90124 placed by Elias Thorne",
+    body: "Industrial concrete lamp, Obsidian vase (2x)",
+    createdAt: "2026-04-28T14:20:24.001Z",
+    icon: `paid`,
+  },
+  {
+    id: 2,
+    title: "Stock Replenishment",
+    body: "Archival paper print 'Solitude' +50 Units",
+    createdAt: "2026-04-28T12:54:29.064Z",
+    icon: `assignment_turned_in`,
+  },
+  {
+    id: 3,
+    title: "Customer Inquiry",
+    body: "Subject: Shipping to Switzeland - Sarah Tahoe",
+    createdAt: "2026-04-28T08:12:56.457Z",
+    icon: `mail`,
+  },
+];
+
 export default function AdminDashboard() {
   return (
     <div className={styles.container}>
@@ -40,20 +66,60 @@ export default function AdminDashboard() {
             <span>SKUs</span>
           </div>
           <div className={styles.cardInventoryStockWrapper}>
-            <span>42 LOW STOCK</span>
-            <span>12 NEW ARRIVALS</span>
+            <span className={`${styles.inventoryCardOptions}`}>
+              42 LOW STOCK
+            </span>
+            <span
+              className={`${styles.inventoryCardOptions} ${styles.newArrivalInInventoryCard}`}
+            >
+              12 NEW ARRIVALS
+            </span>
           </div>
         </div>
       </div>
       <div className={styles.dashboardBottomContent}>
         <div className={styles.recentActivityWrapper}>
-          <div className={styles.activityTextAndNavigation}></div>
-          <div className={styles.activityList}></div>
+          <div className={styles.activityTextAndLogNavigation}>
+            <span className={styles.activitySectionRecentActivity}>
+              Recent Activity
+            </span>
+            <span className={styles.activitySectionViewAllLogs}>
+              VIEW ALL LOGS
+            </span>
+          </div>
+          <div className={styles.activityList}>
+            {activityData.length ? (
+              activityData.map((activity) => {
+                return (
+                  <ActivityCard
+                    key={activity.id}
+                    id={activity.id}
+                    timestamp={activity.createdAt}
+                    title={activity.title}
+                    body={activity.body}
+                    icon={activity.icon || "mail"}
+                  />
+                );
+              })
+            ) : (
+              <h1>No data found</h1>
+            )}
+          </div>
         </div>
         <div className={styles.quickActionActivity}>
-          <span>Quick Actions</span>
-          <button>ADD NEW PRODUCT</button>
-          <button>GENERATE MONTHLY REPORT</button>
+          <span className={styles.quickActionText}>Quick Actions</span>
+          <button
+            className={`${styles.quickActionButtons} ${styles.addNewProductButton}`}
+          >
+            ADD NEW PRODUCT{" "}
+            <span className="material-symbols-outlined">start</span>
+          </button>
+          <button
+            className={`${styles.quickActionButtons} ${styles.generateReportButton}`}
+          >
+            GENERATE MONTHLY REPORT{" "}
+            <span className="material-symbols-outlined">download</span>
+          </button>
         </div>
       </div>
     </div>

@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 50px;
+}
+
+.timestampWrapper {
+  display: flex;
+  flex-direction: column;
+  color: #999;
+  gap: 5px;
+}
+
+.titleBodyWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.activityTitle {
+  font-size: larger;
+  font-weight: normal;
+}
+
+.activityBody {
+  color: #999;
+}
+
+.activityIconWrapper {
+  margin-left: auto;
+}
+
+.horizontalRuler {
+  content: none;
+  border-bottom: 0.2px solid #999;
+}

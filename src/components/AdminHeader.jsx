@@ -10,6 +10,7 @@ export default function AdminHeader() {
         <ul className={styles.optionList}>
           <Link className={`${styles.links}`}>Dashboard</Link>
           <Link className={`${styles.links}`}>Collections</Link>
+          <Link className={`${styles.links}`}>Activity</Link>
         </ul>
       </div>
       <div className={styles.flexEndPortion}>

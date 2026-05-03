@@ -1,6 +1,13 @@
 import styles from "../styles/AdminSidebar.module.css";
 
+import { useNavigate } from "react-router-dom";
+
 export default function SideBar() {
+  const navigate = useNavigate();
+  function handleLogout() {
+    //todo - add a pop up here to ask user to logout. (Logout cofirmation)
+    navigate("/login");
+  }
   return (
     <div className={styles.container}>
       <div className={styles.sidebarHeading}>
@@ -36,7 +43,7 @@ export default function SideBar() {
         </div>
         <div className={styles.sidebarOptions}>
           <span className="material-symbols-outlined">logout</span>
-          <span>LOGOUT</span>
+          <span onClick={handleLogout}>LOGOUT</span>
         </div>
       </div>
     </div>
