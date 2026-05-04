@@ -1,0 +1,51 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  /* subtle background */
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: white;
+  text-align: center;
+}
+
+.constructionLogo {
+  font-size: 200px;
+
+  /* improved gradient */
+  background: linear-gradient(135deg, #facc15, #f97316, #1f2937);
+
+  /* make gradient visible on icon */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* styling */
+  border-radius: 20%;
+  margin-bottom: 20px;
+
+  /* subtle glow */
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+}
+
+h1 {
+  font-size: 2rem;
+  letter-spacing: 3px;
+}
+
+/* .container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.constructionLogo {
+  font-size: 200px;
+  background: linear-gradient(to right, #c8c6c5, #5e5e5e, #304a59);
+  border-radius: 20%;
+} */

@@ -1,5 +1,7 @@
 import styles from "../styles/AdminDashboard.module.css";
 
+import { useUnderConstructionNavigation } from "../hooks/useUnderConstructionNavigation";
+
 import ActivityCard from "../components/ActivityCard";
 
 const activityData = [
@@ -27,6 +29,7 @@ const activityData = [
 ];
 
 export default function AdminDashboard() {
+  const goToUnderConstruction = useUnderConstructionNavigation();
   return (
     <div className={styles.container}>
       <div className={styles.dashboardTopContent}>
@@ -36,7 +39,9 @@ export default function AdminDashboard() {
           </span>
           <h1 className={styles.dashboardHeading}>Curated Dashboard</h1>
         </div>
-        <span className={styles.dashboardLastSync}>Last updated</span>
+        <span className={styles.dashboardLastSync}>
+          Last synced: 26 April 2026, 14:30{" "}
+        </span>
       </div>
       <div className={styles.dashboardMiddleContent}>
         <div className={`${styles.dashboardCards} ${styles.cardTotalSales}`}>
@@ -83,7 +88,10 @@ export default function AdminDashboard() {
             <span className={styles.activitySectionRecentActivity}>
               Recent Activity
             </span>
-            <span className={styles.activitySectionViewAllLogs}>
+            <span
+              className={styles.activitySectionViewAllLogs}
+              onClick={goToUnderConstruction}
+            >
               VIEW ALL LOGS
             </span>
           </div>
@@ -116,6 +124,7 @@ export default function AdminDashboard() {
           </button>
           <button
             className={`${styles.quickActionButtons} ${styles.generateReportButton}`}
+            onClick={goToUnderConstruction}
           >
             GENERATE MONTHLY REPORT{" "}
             <span className="material-symbols-outlined">download</span>

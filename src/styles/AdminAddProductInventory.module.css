@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.textAndButtonWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* border: 1px solid black; */
+}
+
+.topTextWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.curationHubText {
+  letter-spacing: 2px;
+  color: #999;
+}
+
+.productInventoryText {
+  font-size: 2rem;
+  font-weight: bolder;
+}
+
+.addProductButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-left: auto;
+  width: 25%;
+  height: 60px;
+  background-color: #474747;
+  color: white;
+  font-weight: normal;
+}

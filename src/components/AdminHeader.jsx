@@ -1,26 +1,48 @@
 import styles from "../styles/AdminHeader.module.css";
 
 import { Link } from "react-router-dom";
+import { ROUTES } from "../routes/routes";
+
+import { useUnderConstructionNavigation } from "../hooks/useUnderConstructionNavigation";
+import { useDashboardNavigation } from "../hooks/useDashboardNavigation";
 
 export default function AdminHeader() {
+  const goToUnderConstruction = useUnderConstructionNavigation();
+  const goToDashboard = useDashboardNavigation();
+
   return (
     <div className={styles.container}>
       <div className={styles.flexStartPortion}>
-        <span className={styles.zenvy}>ZENVY</span>
+        <span className={styles.zenvy} onClick={goToDashboard}>
+          ZENVY
+        </span>
         <ul className={styles.optionList}>
           <Link className={`${styles.links}`}>Dashboard</Link>
-          <Link className={`${styles.links}`}>Collections</Link>
-          <Link className={`${styles.links}`}>Activity</Link>
+          <Link className={`${styles.links}`} to={ROUTES.UNDER_CONSTRUCTION}>
+            Collections
+          </Link>
+          <Link className={`${styles.links}`} to={ROUTES.UNDER_CONSTRUCTION}>
+            Activity
+          </Link>
         </ul>
       </div>
       <div className={styles.flexEndPortion}>
-        <span className={`material-symbols-outlined ${styles.icons}`}>
+        <span
+          className={`material-symbols-outlined ${styles.icons}`}
+          onClick={goToUnderConstruction}
+        >
           notifications
         </span>
-        <span className={`material-symbols-outlined ${styles.icons}`}>
+        <span
+          className={`material-symbols-outlined ${styles.icons}`}
+          onClick={goToUnderConstruction}
+        >
           settings
         </span>
-        <span className={`material-symbols-outlined ${styles.icons}`}>
+        <span
+          className={`material-symbols-outlined ${styles.icons}`}
+          onClick={goToUnderConstruction}
+        >
           account_circle
         </span>
       </div>

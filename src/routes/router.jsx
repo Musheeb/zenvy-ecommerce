@@ -8,9 +8,16 @@ import Register from "../pages/Register";
 import Login from "../pages/Login";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
+
 import AdminDashboard from "../pages/AdminDashboard";
+import AdminAddProductInventory from "../pages/AdminAddProductInventory";
+import AdminEditProductDetails from "../pages/AdminEditProductDetails";
+
 import UserHome from "../pages/UserHome";
 import PageNotFound from "../pages/PageNotFound";
+import UnderConstruction from "../pages/UnderConstruction";
+
+import { ROUTES } from "./routes";
 
 export const router = createBrowserRouter([
   {
@@ -36,12 +43,20 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/admin-dashboard",
+    path: "/admin/",
     element: <AdminLayout />,
     children: [
       {
-        index: true,
+        path: "dashboard",
         element: <AdminDashboard />,
+      },
+      {
+        path: "add-product",
+        element: <AdminAddProductInventory />,
+      },
+      {
+        path: "edit-product-details",
+        element: <AdminEditProductDetails />,
       },
     ],
   },
@@ -54,6 +69,10 @@ export const router = createBrowserRouter([
         element: <UserHome />,
       },
     ],
+  },
+  {
+    path: "/under-construction",
+    element: <UnderConstruction />,
   },
   {
     path: "*",
