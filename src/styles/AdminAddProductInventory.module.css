@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   padding: 30px;
+  gap: 50px;
 }
 
 .textAndButtonWrapper {
@@ -39,4 +40,90 @@
   background-color: #474747;
   color: white;
   font-weight: normal;
+}
+
+.tableWrapper {
+  width: 100%;
+  /* border: 1px solid black; */
+}
+
+.productImage {
+  width: 150px;
+  border-radius: 20px;
+}
+
+.productNameWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.productName {
+  font-size: larger;
+}
+
+.productSku {
+  font-size: small;
+  color: #999;
+}
+
+.actionWrapper {
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  flex-direction: row;
+  /* border: 1px solid tomato; */
+  gap: 20px;
+}
+
+.actionWrapper > div {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+table {
+  padding: 20px;
+}
+
+.tableHead {
+  /* background-color: orange; */
+}
+
+table th {
+  font-size: 13px;
+  color: #999;
+}
+
+table td,
+table th {
+  vertical-align: middle;
+  text-align: center;
+}
+
+table th,
+table tr {
+  padding: 20px;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 30px 10px;
+}
+
+.editActionWrapper {
+  color: #474747;
+}
+
+.deleteActionWrapper {
+  color: #b91c1c;
+}
+
+.actionIcons {
+  font-size: 20px;
+}
+
+.actionText {
+  font-size: 13px;
 }
