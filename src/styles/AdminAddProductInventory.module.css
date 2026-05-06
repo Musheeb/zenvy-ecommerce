@@ -21,7 +21,7 @@
 
 .curationHubText {
   letter-spacing: 2px;
-  color: #999;
+  color: #607b8b;
 }
 
 .productInventoryText {
@@ -48,8 +48,13 @@
 }
 
 .productImage {
-  width: 150px;
-  border-radius: 20px;
+  /* width: 100%; */
+  /* max-width: 150px; */
+  /* height: auto; */
+  /* border-radius: 20px; */
+  width: 80px;
+  height: 100px;
+  object-fit: cover;
 }
 
 .productNameWrapper {
@@ -85,21 +90,32 @@
 
 table {
   padding: 20px;
+  width: 100%;
+  border: 2px solid #e0e3e5;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .tableHead {
-  /* background-color: orange; */
+  background-color: #e4e2e2;
 }
 
 table th {
   font-size: 13px;
-  color: #999;
+  color: #909191;
+  height: 90px;
+  letter-spacing: 2px;
+  border-bottom: 2px solid #e0e3e5;
 }
 
 table td,
 table th {
   vertical-align: middle;
   text-align: center;
+  padding: 20px;
+}
+
+table td {
+  border-bottom: 1px solid #e0e3e5;
 }
 
 table th,
@@ -108,7 +124,7 @@ table tr {
 }
 
 table {
-  border-collapse: separate;
+  border-collapse: collapse;
   border-spacing: 30px 10px;
 }
 
@@ -126,4 +142,45 @@ table {
 
 .actionText {
   font-size: 13px;
+}
+
+.paginationWrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.paginationInfo {
+  /* margin-top: 0; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  color: #999;
+}
+
+.paginationCounter {
+  /* cursor: pointer; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.paginationSpan {
+  /* background-color: orange; */
+  width: 40px;
+  height: 40px;
+  border: 1px solid #e0e3e5;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.highlightedPaginationSpan {
+  background-color: #474747;
+  color: white;
 }

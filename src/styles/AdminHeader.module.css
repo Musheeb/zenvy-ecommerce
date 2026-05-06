@@ -47,3 +47,35 @@
   gap: 10px;
   margin-right: 10px;
 }
+
+.magnifyingGlass {
+  font-size: medium;
+  color: #999;
+}
+
+.inventorySearchBox {
+  border: none;
+  /* opacity: 0.2; */
+  background-color: transparent;
+}
+
+.inventorySearchBox::placeholder {
+  letter-spacing: 0.5px;
+  color: #999;
+}
+
+.inventorySearchBox:focus {
+  /* border-bottom: 1px solid #474747; */
+  border: none;
+}
+
+.inventorySearchBarWrapper {
+  width: 250px;
+  padding-left: 10px;
+  /* border: 1px solid orange; */
+  background-color: #faf9f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}

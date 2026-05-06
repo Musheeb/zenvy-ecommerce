@@ -78,6 +78,36 @@ export default function AdminAddProductInventory() {
           </tbody>
         </table>
       </div>
+      <div className={styles.paginationWrapper}>
+        <div className={styles.paginationInfo}>
+          <span>SHOWING</span>
+          <span>1</span>
+          <span>-</span>
+          <span>15</span>
+          <span>OF</span>
+          <span>124</span>
+          <span>OBJECTS</span>
+        </div>
+        <div className={styles.paginationCounter}>
+          <span
+            className={`material-symbols-outlined ${styles.paginationSpan}`}
+          >
+            chevron_left
+          </span>
+          <span
+            className={`${styles.paginationSpan} ${styles.highlightedPaginationSpan}`}
+          >
+            1
+          </span>
+          <span className={styles.paginationSpan}>2</span>
+          <span className={styles.paginationSpan}>3</span>
+          <span
+            className={`material-symbols-outlined ${styles.paginationSpan}`}
+          >
+            chevron_right
+          </span>
+        </div>
+      </div>
     </div>
   );
 }

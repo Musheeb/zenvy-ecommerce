@@ -1,12 +1,14 @@
 import styles from "../styles/AdminHeader.module.css";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ROUTES } from "../routes/routes";
 
 import { useUnderConstructionNavigation } from "../hooks/useUnderConstructionNavigation";
 import { useDashboardNavigation } from "../hooks/useDashboardNavigation";
 
 export default function AdminHeader() {
+  const location = useLocation();
+  const path = location.pathname;
   const goToUnderConstruction = useUnderConstructionNavigation();
   const goToDashboard = useDashboardNavigation();
 
@@ -27,6 +29,20 @@ export default function AdminHeader() {
         </ul>
       </div>
       <div className={styles.flexEndPortion}>
+        {path === "/admin/inventory" && (
+          <div className={styles.inventorySearchBarWrapper}>
+            <span
+              className={`material-symbols-outlined ${styles.magnifyingGlass}`}
+            >
+              search
+            </span>
+            <input
+              type="text"
+              placeholder="Search Inventory"
+              className={styles.inventorySearchBox}
+            />
+          </div>
+        )}
         <span
           className={`material-symbols-outlined ${styles.icons}`}
           onClick={goToUnderConstruction}

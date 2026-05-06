@@ -51,7 +51,7 @@ export const router = createBrowserRouter([
         element: <AdminDashboard />,
       },
       {
-        path: "add-product",
+        path: "inventory",
         element: <AdminAddProductInventory />,
       },
       {

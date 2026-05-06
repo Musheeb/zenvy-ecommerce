@@ -2,9 +2,13 @@ import styles from "../styles/AdminSidebar.module.css";
 
 import { useNavigate } from "react-router-dom";
 import { useUnderConstructionNavigation } from "../hooks/useUnderConstructionNavigation";
+import { useDashboardNavigation } from "../hooks/useDashboardNavigation";
+import { useInventoryNavigation } from "../hooks/navigation";
 
 export default function SideBar() {
   const goToUnderConstruction = useUnderConstructionNavigation();
+  const goToDashboard = useDashboardNavigation();
+  const goToInventory = useInventoryNavigation();
   const navigate = useNavigate();
   function handleLogout() {
     //todo - add a pop up here to ask user to logout. (Logout cofirmation)
@@ -17,11 +21,11 @@ export default function SideBar() {
         <span className={styles.textInSidebar}>MANAGEMENT SUITE</span>
       </div>
       <div className={styles.sidebarMiddleOptions}>
-        <div className={styles.sidebarOptions}>
+        <div className={styles.sidebarOptions} onClick={goToDashboard}>
           <span className="material-symbols-outlined">dashboard</span>
           <span>DASHBOARD</span>
         </div>
-        <div className={styles.sidebarOptions} onClick={goToUnderConstruction}>
+        <div className={styles.sidebarOptions} onClick={goToInventory}>
           <span className="material-symbols-outlined">inventory</span>
           <span>INVENTORY</span>
         </div>
