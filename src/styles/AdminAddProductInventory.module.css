@@ -128,11 +128,27 @@ table {
   border-spacing: 30px 10px;
 }
 
+.inStockWrapper {
+  color: #607b8b;
+}
+
+.lowStockWrapper {
+  color: #b91c1c;
+}
+
 .editActionWrapper {
+  color: #808080;
+}
+
+.editActionWrapper:hover {
   color: #474747;
 }
 
 .deleteActionWrapper {
+  color: #e37676;
+}
+
+.deleteActionWrapper:hover {
   color: #b91c1c;
 }
 

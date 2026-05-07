@@ -1,8 +1,11 @@
 import styles from "../styles/AdminAddProductInventory.module.css";
 
 import { products } from "../utils/dummyProducts";
+import { ROUTES } from "../routes/routes";
+import { useEditProductDetailsNavigation } from "../hooks/navigation";
 
 export default function AdminAddProductInventory() {
+  const goToEditProductDetail = useEditProductDetailsNavigation();
   return (
     <div className={styles.container}>
       <div className={styles.textAndButtonWrapper}>
@@ -48,14 +51,24 @@ export default function AdminAddProductInventory() {
                 </td>
                 <td>{product.category}</td>
                 <td>{`${product.currency}${product.price}`}</td>
-                <td>
-                  {product.stockStatus === "available"
+                <td
+                  className={
+                    product.quantity > 10
+                      ? styles.inStockWrapper
+                      : styles.lowStockWrapper
+                  }
+                >
+                  {product.stockStatus === "available" && product.quantity > 10
                     ? "IN STOCK"
-                    : "LOW STOCK"}
+                    : "LOW STOCK"}{" "}
+                  ({product.quantity})
                 </td>
                 <td>
                   <div className={styles.actionWrapper}>
-                    <div className={styles.editActionWrapper}>
+                    <div
+                      className={styles.editActionWrapper}
+                      onClick={goToEditProductDetail}
+                    >
                       <span
                         className={`material-symbols-outlined ${styles.actionIcons}`}
                       >

@@ -8,3 +8,10 @@ export const useInventoryNavigation = () => {
     navigate(ROUTES.ADMIN_INVENTORY);
   };
 };
+
+export const useEditProductDetailsNavigation = () => {
+  const navigate = useNavigate();
+  return () => {
+    navigate(ROUTES.ADMIN_EDIT_PRODUCT);
+  };
+};
