@@ -14,6 +14,7 @@
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
+  margin-bottom: 40px;
 }
 
 .topContentFirstLineWrapper {
@@ -43,7 +44,7 @@
 .paragraph {
   font-size: medium;
   color: #777777;
-  /* margin-top: 0; */
+  margin-top: 5px;
 }
 
 .mainContentWrapper {
@@ -52,8 +53,133 @@
 
 .productDetailsWrapper {
   width: 60%;
-  border: 1px solid violet;
+  padding: 10px 30px 10px 10px;
+  /* border: 1px solid violet; */
 }
+
+.productNameInput {
+  height: 50px;
+  background-color: transparent;
+  font-size: large;
+  border-bottom: 0.5px solid #999;
+}
+
+.productNameInput::placeholder {
+  padding-left: 10px;
+  font-size: large;
+}
+
+.productNameInput:focus {
+  border-bottom: 1px solid #999;
+  outline: none;
+}
+
+.categoryAndSkuWrapper {
+  display: flex;
+  align-items: center;
+  padding: 30px 0 10px 0;
+}
+
+.categoryWrapper {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.selectCategoryTag {
+  height: 40px;
+  font-size: medium;
+  background-color: #e6eeea;
+  border: none;
+}
+
+.skuIdentifierWrapper {
+  width: 45%;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skuIdentifierInput {
+  height: 40px;
+  background-color: #e6eeea;
+  font-size: large;
+  border: none;
+}
+
+.skuIdentifierInput::placeholder {
+  font-size: medium;
+  padding-left: 10px;
+}
+
+.skuIdentifierInput:focus {
+  border-bottom: 1px solid #999;
+}
+
+.detailedDescriptionWrapper {
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+  gap: 10px;
+}
+
+.textAreaOfDetailedDescription {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  border: none;
+  background-color: #e6eeea;
+  resize: vertical;
+}
+
+.textAreaOfDetailedDescription::placeholder {
+  color: #999;
+  font-family: sans-serif;
+  letter-spacing: 1px;
+}
+
+.priceAndCurrencyWrapper {
+  margin-top: 30px;
+  display: flex;
+  padding: 30px;
+  background-color: #e6eeea;
+}
+
+.priceAndCurrencyCombined {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.priceAndCurrency {
+  font-size: small;
+  color: #919090;
+  font-weight: bolder;
+  letter-spacing: 1px;
+}
+
+.standardPriceWrapper {
+  align-items: center;
+}
+
+.price {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #607b8b;
+}
+
+.dollarSign {
+  color: #999;
+}
+
+.currencyWrapper {
+  margin-left: auto;
+  align-items: flex-end;
+}
+
+/* Below is the bottom section of the page */
 
 .productImagesAndActionWrapper {
   width: 40%;

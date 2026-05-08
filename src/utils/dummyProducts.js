@@ -30,7 +30,7 @@ export const products = [
     price: 4500,
     currency: "$",
     stockStatus: "unavailable",
-    quantity: 0,
+    quantity: 2,
   },
   {
     _id: "665f1a2b9c1d4e0012340004",
@@ -129,7 +129,7 @@ export const products = [
     price: 22000,
     currency: "$",
     stockStatus: "unavailable",
-    quantity: 0,
+    quantity: 4,
   },
   {
     _id: "665f1a2b9c1d4e0012340013",

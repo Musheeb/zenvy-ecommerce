@@ -53,12 +53,12 @@ export default function AdminAddProductInventory() {
                 <td>{`${product.currency}${product.price}`}</td>
                 <td
                   className={
-                    product.quantity > 10
+                    product.quantity > 5
                       ? styles.inStockWrapper
                       : styles.lowStockWrapper
                   }
                 >
-                  {product.stockStatus === "available" && product.quantity > 10
+                  {product.stockStatus === "available" && product.quantity > 5
                     ? "IN STOCK"
                     : "LOW STOCK"}{" "}
                   ({product.quantity})
