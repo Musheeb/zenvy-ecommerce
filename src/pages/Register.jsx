@@ -16,7 +16,7 @@ export default function Register() {
               meaning. Discover products chosen with intention, not impulse.
             </p>
             <img
-              src="zenvyHeroSection.png"
+              src="/zenvyHeroSection.png"
               alt="ZENVY BRANDING IMAGE"
               className={styles.brandingImage}
             />

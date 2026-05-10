@@ -82,7 +82,31 @@ export default function AdminEditProductDetails() {
             </div>
           </div>
         </div>
-        <div className={styles.productImagesAndActionWrapper}></div>
+        <div className={styles.productImagesAndActionWrapper}>
+          <div className={styles.visualAssetText}>
+            <span className={styles.visualAssetsText}>VISUAL ASSETS</span>
+            <span className={styles.upto4ImagesText}>Up to 4 images</span>
+          </div>
+          <div className={styles.imageCard}>
+            <img
+              src="/batPic.png"
+              alt="Dummy Image"
+              className={styles.primaryImageCard}
+            />
+            <div className={styles.overlayWrapper}>
+              <span
+                className={`material-symbols-outlined ${styles.iconAndText} ${styles.primaryImageIcon}`}
+              >
+                add_photo_alternate
+              </span>
+              <span
+                className={`${styles.iconAndText} ${styles.primaryImageUploadText}`}
+              >
+                UPLOAD PRIMARY ASSET
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
