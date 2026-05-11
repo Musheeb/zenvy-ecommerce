@@ -4,6 +4,14 @@ body {
   font-family: Inter, sans-serif;
 }
 
+button {
+  letter-spacing: 2px;
+}
+
+input {
+  letter-spacing: 1px;
+}
+
 * {
   box-sizing: border-box;
 }

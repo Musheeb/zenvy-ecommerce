@@ -71,11 +71,15 @@ export default function AdminDashboard() {
             <span>SKUs</span>
           </div>
           <div className={styles.cardInventoryStockWrapper}>
-            <span className={`${styles.inventoryCardOptions}`}>
+            <span
+              className={`${styles.inventoryCardOptions}`}
+              onClick={goToUnderConstruction}
+            >
               42 LOW STOCK
             </span>
             <span
               className={`${styles.inventoryCardOptions} ${styles.newArrivalInInventoryCard}`}
+              onClick={goToUnderConstruction}
             >
               12 NEW ARRIVALS
             </span>

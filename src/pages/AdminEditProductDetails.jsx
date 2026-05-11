@@ -106,6 +106,28 @@ export default function AdminEditProductDetails() {
               </span>
             </div>
           </div>
+          <div className={styles.imageOptions}>
+            <div className={`${styles.emptyImages}`}>
+              <span className="material-symbols-outlined">add</span>
+            </div>
+            <div className={`${styles.emptyImages}`}>
+              <span className="material-symbols-outlined">add</span>
+            </div>
+            <div className={`${styles.emptyImages}`}>
+              <span className="material-symbols-outlined">add</span>
+            </div>
+          </div>
+          <hr className={styles.horizontalRulerInImageSection} />
+          <button
+            className={`${styles.buttonsInImageSection} ${styles.saveProductButton}`}
+          >
+            SAVE PRODUCT
+          </button>
+          <button
+            className={`${styles.buttonsInImageSection} ${styles.cancelButton}`}
+          >
+            CANCEL
+          </button>
         </div>
       </div>
     </div>
