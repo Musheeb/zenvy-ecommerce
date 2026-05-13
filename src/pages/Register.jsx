@@ -1,9 +1,14 @@
-import { ROUTES } from "../routes/routes";
 import styles from "../styles/Register.module.css";
+import { ROUTES } from "../routes/routes";
 
 import { Link } from "react-router-dom";
 
 export default function Register() {
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log("From submitted");
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.advertisementWrapper}>
@@ -23,7 +28,7 @@ export default function Register() {
           </div>
         </div>
       </div>
-      <div className={styles.registerationContent}>
+      <form onSubmit={handleSubmit} className={styles.registerationContent}>
         <div>
           <h2>CREATE ACCOUNT</h2>
           <p className={styles.createAccountParagraph}>
@@ -66,7 +71,7 @@ export default function Register() {
             LOGIN
           </Link>
         </p>
-      </div>
+      </form>
     </div>
   );
 }
