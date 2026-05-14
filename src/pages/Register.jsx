@@ -1,12 +1,51 @@
 import styles from "../styles/Register.module.css";
-import { ROUTES } from "../routes/routes";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
-import { Link } from "react-router-dom";
+import { ROUTES } from "../routes/routes";
+import { useState } from "react";
+import { registerUserService } from "../services/auth.service";
 
 export default function Register() {
-  function handleSubmit(event) {
+  const navigate = useNavigate();
+  const initialFormStage = {
+    username: "",
+    email: "",
+    password: "",
+  };
+  const [registrationData, setRegistrationData] = useState(initialFormStage);
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setRegistrationData((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  }
+
+  async function handleSubmit(event) {
     event.preventDefault();
-    console.log("From submitted");
+    if (
+      !registrationData.username ||
+      !registrationData.email ||
+      !registrationData.password
+    ) {
+      toast.error("Fullname, password and email are required!");
+      return;
+    }
+    try {
+      const response = await registerUserService(registrationData);
+      //set token in the cookie here if needed.
+      toast.success(response.message);
+      setRegistrationData(initialFormStage);
+      // Check if the role is admin or user and then act accordingly.
+      navigate(ROUTES.ADMIN_DASHBOARD);
+    } catch (e) {
+      toast.error(e || "Something went wrong");
+    }
+    console.log("Form submitted");
   }
 
   return (
@@ -35,13 +74,15 @@ export default function Register() {
             Explore products shaped by purpose and design.
           </p>
         </div>
-        <label htmlFor="fullname">FULL NAME</label>
+        <label htmlFor="username">FULL NAME</label>
         <input
           className={styles.inputsRegistration}
           type="text"
-          id="fullname"
+          id="username"
           placeholder="JOHN DOE"
-          name="fullname"
+          name="username"
+          value={registrationData.username}
+          onChange={handleChange}
         />
         <label htmlFor="email">EMAIL ADDRESS</label>
         <input
@@ -50,6 +91,8 @@ export default function Register() {
           id="email"
           placeholder="archive@zenvy.com"
           name="email"
+          value={registrationData.email}
+          onChange={handleChange}
         />
         <label htmlFor="password">PASSWORD</label>
         <input
@@ -58,6 +101,8 @@ export default function Register() {
           id="password"
           placeholder="********"
           name="password"
+          value={registrationData.password}
+          onChange={handleChange}
         />
         <button className={styles.createAccountButton}>CREATE ACCOUNT</button>
         <span className={styles.orSignUpWithGoogle}>OR</span>
