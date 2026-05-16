@@ -101,6 +101,24 @@ h2 {
   max-width: 500px;
 }
 
+.passwordWrapper {
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-60%);
+  cursor: pointer;
+  color: #919090;
+}
+
 button {
   width: 100%;
   cursor: pointer;

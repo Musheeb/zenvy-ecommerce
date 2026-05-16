@@ -8,12 +8,16 @@ import { registerUserService } from "../services/auth.service";
 
 export default function Register() {
   const navigate = useNavigate();
-  const initialFormStage = {
+  const initialFormState = {
     username: "",
     email: "",
     password: "",
   };
-  const [registrationData, setRegistrationData] = useState(initialFormStage);
+  const [registrationData, setRegistrationData] = useState(initialFormState);
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { username, email, password } = registrationData;
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -27,11 +31,8 @@ export default function Register() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (
-      !registrationData.username ||
-      !registrationData.email ||
-      !registrationData.password
-    ) {
+    if (isLoading) return;
+    if (!username || !email || !password) {
       toast.error("Fullname, password and email are required!");
       return;
     }
@@ -39,13 +40,18 @@ export default function Register() {
       const response = await registerUserService(registrationData);
       //set token in the cookie here if needed.
       toast.success(response.message);
-      setRegistrationData(initialFormStage);
+      setRegistrationData(initialFormState);
       // Check if the role is admin or user and then act accordingly.
       navigate(ROUTES.ADMIN_DASHBOARD);
     } catch (e) {
-      toast.error(e || "Something went wrong");
+      toast.error(e.message || "Something went wrong");
+    } finally {
+      setIsLoading(true);
     }
-    console.log("Form submitted");
+  }
+
+  function handleShowPassword() {
+    setShowPassword((prev) => !prev);
   }
 
   return (
@@ -81,7 +87,7 @@ export default function Register() {
           id="username"
           placeholder="JOHN DOE"
           name="username"
-          value={registrationData.username}
+          value={username}
           onChange={handleChange}
         />
         <label htmlFor="email">EMAIL ADDRESS</label>
@@ -91,19 +97,36 @@ export default function Register() {
           id="email"
           placeholder="archive@zenvy.com"
           name="email"
-          value={registrationData.email}
+          value={email}
           onChange={handleChange}
         />
         <label htmlFor="password">PASSWORD</label>
-        <input
-          className={`${styles.inputsRegistration} ${styles.passwordInput}`}
-          type="password"
-          id="password"
-          placeholder="********"
-          name="password"
-          value={registrationData.password}
-          onChange={handleChange}
-        />
+        <div className={styles.passwordWrapper}>
+          <input
+            className={`${styles.inputsRegistration} ${styles.passwordInput}`}
+            type={showPassword ? "text" : "password"}
+            id="password"
+            placeholder="********"
+            name="password"
+            value={password}
+            onChange={handleChange}
+          />
+          {showPassword ? (
+            <span
+              className={`material-symbols-outlined ${styles.eyeIcon}`}
+              onClick={handleShowPassword}
+            >
+              visibility_off
+            </span>
+          ) : (
+            <span
+              className={`material-symbols-outlined ${styles.eyeIcon}`}
+              onClick={handleShowPassword}
+            >
+              visibility
+            </span>
+          )}
+        </div>
         <button className={styles.createAccountButton}>CREATE ACCOUNT</button>
         <span className={styles.orSignUpWithGoogle}>OR</span>
         <button className={styles.signUpWithGoogle}>

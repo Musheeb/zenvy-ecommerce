@@ -4,12 +4,43 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { ROUTES } from "../routes/routes";
+import toast from "react-hot-toast";
 
 export default function Login() {
+  const userInput = {
+    email: "",
+    password: "",
+  };
+  const [userCredentials, setUserCredentials] = useState(userInput);
+  const { email, password } = userCredentials;
   const [showPassword, setShowPassword] = useState(false);
+
+  console.log(userCredentials);
+
   function handleShowPassword() {
     setShowPassword((prev) => !prev);
   }
+
+  function handleUserInput(event) {
+    const { name, value } = event.target;
+    setUserCredentials((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  }
+
+  function handleLogin(event) {
+    event.preventDefault();
+    if (!email || !password) {
+      toast.error("Email and Password are required!");
+      return;
+    }
+    toast.success(`${email} - ${password}`);
+    return;
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.branding}>
@@ -31,6 +62,8 @@ export default function Login() {
             id="email"
             name="email"
             placeholder="curator@zenvy.com"
+            value={email}
+            onChange={handleUserInput}
           />
           <div className={styles.inputGroup}>
             <div className={styles.passwordLabelForgetPasswordWrapper}>
@@ -50,6 +83,9 @@ export default function Login() {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 placeholder="*********"
+                name="password"
+                value={password}
+                onChange={handleUserInput}
               />
               {showPassword ? (
                 <span
@@ -68,7 +104,10 @@ export default function Login() {
               )}
             </div>
           </div>
-          <button className={`${styles.buttons} ${styles.loginButton}`}>
+          <button
+            className={`${styles.buttons} ${styles.loginButton}`}
+            onClick={handleLogin}
+          >
             LOGIN
           </button>
           <p className={styles.loginOptionSeparatorText}>OR CONTINUE WITH</p>
