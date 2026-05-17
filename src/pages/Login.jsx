@@ -1,12 +1,15 @@
 import styles from "../styles/Login.module.css";
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { ROUTES } from "../routes/routes";
 import toast from "react-hot-toast";
 
+import { loginUserService } from "../services/auth.service";
+
 export default function Login() {
+  const navigate = useNavigate();
   const userInput = {
     email: "",
     password: "",
@@ -14,8 +17,7 @@ export default function Login() {
   const [userCredentials, setUserCredentials] = useState(userInput);
   const { email, password } = userCredentials;
   const [showPassword, setShowPassword] = useState(false);
-
-  console.log(userCredentials);
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleShowPassword() {
     setShowPassword((prev) => !prev);
@@ -31,14 +33,23 @@ export default function Login() {
     });
   }
 
-  function handleLogin(event) {
-    event.preventDefault();
-    if (!email || !password) {
-      toast.error("Email and Password are required!");
-      return;
+  async function handleLogin(event) {
+    try {
+      event.preventDefault();
+      if (isLoading) return;
+      if (!email || !password) {
+        toast.error("Email and Password are required!");
+        return;
+      }
+      setIsLoading(true);
+      const response = await loginUserService({ email, password });
+      toast.success(response.message);
+      navigate(ROUTES.ADMIN_DASHBOARD); //Redirect to dahsboard according to user's role.
+    } catch (e) {
+      toast.error(e.message || "Something went wrong");
+    } finally {
+      setIsLoading(false); // Don't forget to set this isLoading false on logout.
     }
-    toast.success(`${email} - ${password}`);
-    return;
   }
 
   return (
