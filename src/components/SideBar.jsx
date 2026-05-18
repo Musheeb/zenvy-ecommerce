@@ -47,9 +47,9 @@ export default function SideBar() {
           <span className="material-symbols-outlined">help</span>
           <span>SUPPORT</span>
         </div>
-        <div className={styles.sidebarOptions}>
+        <div className={styles.sidebarOptions} onClick={handleLogout}>
           <span className="material-symbols-outlined">logout</span>
-          <span onClick={handleLogout}>LOGOUT</span>
+          <span>LOGOUT</span>
         </div>
       </div>
     </div>
