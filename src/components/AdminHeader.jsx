@@ -19,7 +19,7 @@ export default function AdminHeader() {
           ZENVY
         </span>
         <ul className={styles.optionList}>
-          <Link className={`${styles.links}`}>Dashboard</Link>
+          <Link to={ROUTES.ADMIN_DASHBOARD} className={`${styles.links}`}>Dashboard</Link>
           <Link className={`${styles.links}`} to={ROUTES.UNDER_CONSTRUCTION}>
             Collections
           </Link>

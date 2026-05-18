@@ -1,17 +1,53 @@
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import styles from "../styles/ForgotPassword.module.css";
 
 import { ROUTES } from "../routes/routes";
 import { useState } from "react";
 
+import { forgotPasswordService } from "../services/auth.service";
+
 export default function ForgotPassword() {
   const [sendResetLink, setSendResetLink] = useState(false);
-  function handleSendResetLink() {
-    setSendResetLink(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState("");
+
+  async function handleSendResetLink() {
+    if (isLoading) return;
+    if (!email) {
+      toast.error("Email can not be empty!");
+      return;
+    }
+    const furnishedEmail = email.trim().toLowerCase();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(furnishedEmail)) {
+      toast.error("Please enter a valid email address!");
+      return;
+    }
+    try {
+      setIsLoading(true);
+      const response = await forgotPasswordService(furnishedEmail);
+      setSendResetLink(true);
+      setEmail("");
+      toast.success(response.message);
+      return;
+    } catch (e) {
+      setIsLoading(false);
+      toast.error(e.message || "Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
   }
+
   function handleClosePopup() {
     setSendResetLink(false);
   }
+
+  function handleEmailInput(event) {
+    const { value } = event.target;
+    setEmail(value);
+  }
+
   return (
     // <div className={styles.page}>
     <div className={styles.container}>
@@ -30,6 +66,9 @@ export default function ForgotPassword() {
           placeholder="curator@zenvy.com"
           id="email"
           className={styles.emailInput}
+          name="email"
+          value={email}
+          onChange={handleEmailInput}
         />
         <button className={styles.sendLinkButton} onClick={handleSendResetLink}>
           SEND RESET LINK

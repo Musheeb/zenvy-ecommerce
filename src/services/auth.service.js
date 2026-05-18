@@ -36,3 +36,18 @@ export const loginUserService = async ({ email, password }) => {
     throw e?.response?.data || "Something went wrong while logging in user";
   }
 };
+
+export const forgotPasswordService = async (email) => {
+  try {
+    const { data } = await api.post("/forgot-password", {
+      email,
+    });
+    return data;
+  } catch (e) {
+    console.log(
+      "error occured while forgetting password. Error: ",
+      e?.response?.data,
+    );
+    throw e?.response?.data || "Something went wrong while forgetting password";
+  }
+};

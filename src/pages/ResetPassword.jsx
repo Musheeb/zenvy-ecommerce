@@ -41,7 +41,7 @@ export default function ResetPassword() {
       <span className={styles.titleZenvy}>ZENVY</span>
       <div className={styles.card}>
         <div className={styles.resetPasswordContent}>
-          <h1>RESET PASSWORD</h1>
+          <h1 className={styles.headingResetPassword}>RESET PASSWORD</h1>
           <p className={styles.instructionInParagraph}>
             Enter your new credentials below to secure your access to the
             archive.
