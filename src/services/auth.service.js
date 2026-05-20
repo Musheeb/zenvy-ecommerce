@@ -51,3 +51,23 @@ export const forgotPasswordService = async (email) => {
     throw e?.response?.data || "Something went wrong while forgetting password";
   }
 };
+
+export const resetPasswordService = async (
+  token,
+  password,
+  confirmPassword,
+) => {
+  try {
+    const { data } = await api.post(`/reset-password/${token}`, {
+      password,
+      confirmPassword,
+    });
+    return data;
+  } catch (e) {
+    console.log(
+      "error occured while resetting password. Error: ",
+      e?.response?.data,
+    );
+    throw e?.response?.data || "Somethign went wrong while resetting password";
+  }
+};

@@ -1,10 +1,14 @@
 import styles from "../styles/ResetPassword.module.css";
 import toast from "react-hot-toast";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 
+import { resetPasswordService } from "../services/auth.service";
+import { ROUTES } from "../routes/routes";
+
 export default function ResetPassword() {
+  const { token } = useParams();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmNewPassword] = useState("");
   const navigate = useNavigate();
@@ -18,19 +22,29 @@ export default function ResetPassword() {
     }
   }
 
-  function handleUpdateAccess() {
+  async function handleUpdateAccess() {
     if (!password || !confirmPassword) {
-      toast.error("New password or Confirm new password can not be empty!");
+      toast.error("New password or Confirm password can not be empty!");
       return;
     }
     if (password !== confirmPassword) {
-      console.log("Yes inside the condition");
-      toast.error("New password and Confirm new password are not same.");
+      toast.error("New password and Confirm password are not the same.");
       return;
     }
-    toast.success(
-      "Congratulations🎉! Your new password has been set successfully",
-    );
+    try {
+      const response = await resetPasswordService(
+        token,
+        password,
+        confirmPassword,
+      );
+      toast.success(response.message);
+      setPassword("");
+      setConfirmNewPassword("");
+      navigate(ROUTES.LOGIN);
+      return;
+    } catch (e) {
+      toast.error(e.message || "Something went wrong");
+    }
   }
 
   function handleNavigateToLogin() {
