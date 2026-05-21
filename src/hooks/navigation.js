@@ -15,3 +15,10 @@ export const useEditProductDetailsNavigation = () => {
     navigate(ROUTES.ADMIN_EDIT_PRODUCT);
   };
 };
+
+export const useAddNewProductNavigation = () => {
+  const navigate = useNavigate();
+  return () => {
+    navigate(ROUTES.ADMIN_EDIT_PRODUCT);
+  };
+};

@@ -2,10 +2,15 @@ import styles from "../styles/AdminAddProductInventory.module.css";
 
 import { products } from "../utils/dummyProducts";
 import { ROUTES } from "../routes/routes";
-import { useEditProductDetailsNavigation } from "../hooks/navigation";
+import {
+  useEditProductDetailsNavigation,
+  useAddNewProductNavigation,
+} from "../hooks/navigation";
 
 export default function AdminAddProductInventory() {
   const goToEditProductDetail = useEditProductDetailsNavigation();
+  const goToAddNewProductDetail = useAddNewProductNavigation();
+
   return (
     <div className={styles.container}>
       <div className={styles.textAndButtonWrapper}>
@@ -13,7 +18,10 @@ export default function AdminAddProductInventory() {
           <span className={styles.curationHubText}>CURATION HUB</span>
           <span className={styles.productInventoryText}>Product Inventory</span>
         </div>
-        <button className={`${styles.addProductButton}`}>
+        <button
+          className={`${styles.addProductButton}`}
+          onClick={goToAddNewProductDetail}
+        >
           <span className="material-symbols-outlined">add</span>ADD NEW PRODUCT
         </button>
       </div>
