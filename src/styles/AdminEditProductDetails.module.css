@@ -1,3 +1,7 @@
+input {
+  padding-left: 10px;
+}
+
 .container {
   width: 100%;
   height: 100vh;
@@ -119,6 +123,7 @@
 }
 
 .detailedDescriptionWrapper {
+  min-width: 70%;
   display: flex;
   flex-direction: column;
   padding-top: 30px;
@@ -134,10 +139,20 @@
   resize: vertical;
 }
 
+.descriptionQuantityWrapper {
+  display: flex;
+  width: 100%;
+  /* border: 1px solid violet; */
+}
+
 .textAreaOfDetailedDescription::placeholder {
   color: #999;
   font-family: sans-serif;
   letter-spacing: 1px;
+}
+
+.textAreaOfDetailedDescription:focus {
+  outline: none;
 }
 
 .priceAndCurrencyWrapper {
@@ -242,6 +257,46 @@
 
 .primaryImageUploadText {
   font-weight: 300;
+}
+
+.quantityWrapperWithLabel {
+  padding-top: 30px;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: auto;
+  /* height: 100%; */
+  /* flex: 1; */
+  /* border: 1px solid pink; */
+}
+
+.quantityWrapper {
+  display: flex;
+  /* border: 1px solid orange; */
+}
+
+.quantityInput {
+  cursor: pointer;
+  /* height: 50%; */
+  background-color: #e6eeea;
+  height: 3em;
+  font-size: medium;
+
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.quantityInput::placeholder {
+  text-align: center;
+  color: #607b8b;
+}
+
+.quantityInput:focus {
+  border: none;
 }
 
 .imageOptions {

@@ -26,7 +26,7 @@ export default function AdminEditProductDetails() {
             type="text"
             id="productTitle"
             name="productTitle"
-            placeholder="e.g. Cricket Bat (Oval Handle)"
+            placeholder="Cricket Bat (Oval Handle - Maximum Length)"
             className={styles.productNameInput}
           />
           <div className={styles.categoryAndSkuWrapper}>
@@ -43,6 +43,7 @@ export default function AdminEditProductDetails() {
                 <option value="category3">cat 3</option>
                 <option value="category4">cat 4</option>
                 <option value="category5">cat 5</option>
+                <option value="other">+ Add New Category</option>
               </select>
             </div>
             <div className={styles.skuIdentifierWrapper}>
@@ -56,14 +57,28 @@ export default function AdminEditProductDetails() {
               />
             </div>
           </div>
-          <div className={styles.detailedDescriptionWrapper}>
-            <label htmlFor="detailedDescription">DETAILED DESCRIPTION</label>
-            <textarea
-              name="detailedDescription"
-              id="detailedDescription"
-              placeholder="Enter the editorial narrative of the product..."
-              className={styles.textAreaOfDetailedDescription}
-            ></textarea>
+          <div className={styles.descriptionQuantityWrapper}>
+            <div className={styles.detailedDescriptionWrapper}>
+              <label htmlFor="detailedDescription">DETAILED DESCRIPTION</label>
+              <textarea
+                name="detailedDescription"
+                id="detailedDescription"
+                placeholder="Enter the editorial narrative of the product..."
+                className={styles.textAreaOfDetailedDescription}
+              ></textarea>
+            </div>
+            <div className={styles.quantityWrapperWithLabel}>
+              <label htmlFor="quantity">QUANTITY</label>
+              <div className={styles.quantityWrapper}>
+                <input
+                  type="number"
+                  id="quantity"
+                  placeholder="0"
+                  className={styles.quantityInput}
+                  name="quantity"
+                />
+              </div>
+            </div>
           </div>
           <div className={styles.priceAndCurrencyWrapper}>
             <div
