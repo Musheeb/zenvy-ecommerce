@@ -1,6 +1,44 @@
+import { useState, useEffect, useRef } from "react";
 import styles from "../styles/AdminEditProductDetails.module.css";
 
 export default function AdminEditProductDetails() {
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [showNewCategoryInput, setShowNewCategoryInput] = useState(false);
+  const [newCategory, setNewCategory] = useState("");
+
+  const categoryInputRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        categoryInputRef.current &&
+        !categoryInputRef.current.contains(event.target)
+      ) {
+        setShowNewCategoryInput(false);
+        setNewCategory("");
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.addEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  function handleSelection(event) {
+    const { value } = event.target;
+    setSelectedCategory(value);
+    if (value === "other") {
+      setShowNewCategoryInput(true);
+    } else {
+      setShowNewCategoryInput(false);
+    }
+  }
+
+  function handleSaveCategory() {
+    console.log("Save clicked");
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.topContentWrapper}>
@@ -36,6 +74,7 @@ export default function AdminEditProductDetails() {
                 name="category"
                 id="category"
                 className={styles.selectCategoryTag}
+                onChange={handleSelection}
               >
                 <option value="select">Select Category</option>
                 <option value="category1">cat 1</option>
@@ -43,8 +82,29 @@ export default function AdminEditProductDetails() {
                 <option value="category3">cat 3</option>
                 <option value="category4">cat 4</option>
                 <option value="category5">cat 5</option>
-                <option value="other">+ Add New Category</option>
+                <option value="other">+ Add a new category</option>
               </select>
+              {showNewCategoryInput && (
+                <div
+                  ref={categoryInputRef}
+                  className={styles.addCategoryWrapper}
+                >
+                  <input
+                    type="text"
+                    placeholder="Enter new category"
+                    value={newCategory}
+                    onChange={(e) => setNewCategory(e.target.value)}
+                    className={styles.newCategoryInput}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleSaveCategory}
+                    className={styles.saveCategoryButton}
+                  >
+                    Save
+                  </button>
+                </div>
+              )}
             </div>
             <div className={styles.skuIdentifierWrapper}>
               <label htmlFor="skuIdentifier">SKU IDENTIFIER</label>
