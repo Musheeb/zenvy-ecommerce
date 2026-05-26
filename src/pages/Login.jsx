@@ -43,6 +43,7 @@ export default function Login() {
       }
       setIsLoading(true);
       const response = await loginUserService({ email, password });
+      localStorage.setItem("accessToken", response?.accessToken);
       toast.success(response.message);
       navigate(ROUTES.ADMIN_DASHBOARD); //Redirect to dahsboard according to user's role.
     } catch (e) {

@@ -1,8 +1,9 @@
 import api from "../api/axios";
+import API_ROUTES from "../api/apiEndpoints";
 
 export const registerUserService = async ({ username, password, email }) => {
   try {
-    const { data } = await api.post("/register", {
+    const { data } = await api.post(API_ROUTES.auth.register, {
       username,
       password,
       email,
@@ -23,7 +24,7 @@ export const registerUserService = async ({ username, password, email }) => {
 
 export const loginUserService = async ({ email, password }) => {
   try {
-    const { data } = await api.post("/login", {
+    const { data } = await api.post(API_ROUTES.auth.login, {
       email,
       password,
     });
@@ -39,7 +40,7 @@ export const loginUserService = async ({ email, password }) => {
 
 export const forgotPasswordService = async (email) => {
   try {
-    const { data } = await api.post("/forgot-password", {
+    const { data } = await api.post(API_ROUTES.auth.forgotPassword, {
       email,
     });
     return data;
@@ -58,7 +59,7 @@ export const resetPasswordService = async (
   confirmPassword,
 ) => {
   try {
-    const { data } = await api.post(`/reset-password/${token}`, {
+    const { data } = await api.post(API_ROUTES.auth.resetPassword(token), {
       password,
       confirmPassword,
     });
