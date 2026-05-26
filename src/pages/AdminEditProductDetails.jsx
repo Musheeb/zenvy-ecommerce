@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import styles from "../styles/AdminEditProductDetails.module.css";
+import toast from "react-hot-toast";
+
+import { addNewCategoryService } from "../services/category.service";
 
 export default function AdminEditProductDetails() {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -7,6 +10,7 @@ export default function AdminEditProductDetails() {
   const [newCategory, setNewCategory] = useState("");
 
   const categoryInputRef = useRef(null);
+  const categoryInputBoxRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -21,7 +25,7 @@ export default function AdminEditProductDetails() {
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -35,8 +39,24 @@ export default function AdminEditProductDetails() {
     }
   }
 
-  function handleSaveCategory() {
-    console.log("Save clicked");
+  useEffect(() => {
+    if (showNewCategoryInput) {
+      categoryInputBoxRef.current?.focus();
+    }
+  }, [showNewCategoryInput]);
+
+  async function handleSaveCategory() {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const response = await addNewCategoryService({ newCategory, token });
+      toast.success(response.data.message);
+      setShowNewCategoryInput(false);
+      return;
+    } catch (e) {
+      toast.error(
+        e.message || "Something went wrong while adding new category",
+      );
+    }
   }
 
   return (
@@ -90,6 +110,7 @@ export default function AdminEditProductDetails() {
                   className={styles.addCategoryWrapper}
                 >
                   <input
+                    ref={categoryInputBoxRef}
                     type="text"
                     placeholder="Enter new category"
                     value={newCategory}
