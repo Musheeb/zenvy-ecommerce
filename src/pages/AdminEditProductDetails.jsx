@@ -8,9 +8,11 @@ export default function AdminEditProductDetails() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showNewCategoryInput, setShowNewCategoryInput] = useState(false);
   const [newCategory, setNewCategory] = useState("");
+  const [images, setImages] = useState([null, null, null, null]);
 
   const categoryInputRef = useRef(null);
   const categoryInputBoxRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -57,6 +59,27 @@ export default function AdminEditProductDetails() {
         e.message || "Something went wrong while adding new category",
       );
     }
+  }
+
+  function handleImageCardClick() {
+    fileInputRef.current.click();
+  }
+
+  // console.log(images);
+
+  function handleImageSelection(index, event) {
+    // const file = Array.from(event.target.files[0]);
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const updatedImages = [...images];
+
+    updatedImages[index] = {
+      file,
+      preview: URL.createObjectURL(file),
+    };
+
+    setImages(updatedImages);
   }
 
   return (
@@ -167,7 +190,12 @@ export default function AdminEditProductDetails() {
             >
               <label htmlFor="price">STANDARD PRICE</label>
               <span id="price" className={styles.price}>
-                <span className={styles.dollarSign}>$</span> 0.00
+                <span className={styles.dollarSign}>$</span>{" "}
+                <input
+                  type="number"
+                  placeholder="0.00"
+                  className={styles.priceInput}
+                />
               </span>
             </div>
             <div
@@ -183,24 +211,35 @@ export default function AdminEditProductDetails() {
             <span className={styles.visualAssetsText}>VISUAL ASSETS</span>
             <span className={styles.upto4ImagesText}>Up to 4 images</span>
           </div>
-          <div className={styles.imageCard}>
+          <div className={styles.imageCard} onClick={handleImageCardClick}>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              hidden
+              className={styles.primaryImageInput}
+              onChange={(event) => handleImageSelection(0, event)}
+            />
             <img
-              src="/batPic.png"
+              // src="/batPic.png"
+              src={images[0] ? images[0]?.preview : "/batPic.png"}
               alt="Dummy Image"
               className={styles.primaryImageCard}
             />
-            <div className={styles.overlayWrapper}>
-              <span
-                className={`material-symbols-outlined ${styles.iconAndText} ${styles.primaryImageIcon}`}
-              >
-                add_photo_alternate
-              </span>
-              <span
-                className={`${styles.iconAndText} ${styles.primaryImageUploadText}`}
-              >
-                UPLOAD PRIMARY ASSET
-              </span>
-            </div>
+            {!images[0] && (
+              <div className={styles.overlayWrapper}>
+                <span
+                  className={`material-symbols-outlined ${styles.iconAndText} ${styles.primaryImageIcon}`}
+                >
+                  add_photo_alternate
+                </span>
+                <span
+                  className={`${styles.iconAndText} ${styles.primaryImageUploadText}`}
+                >
+                  UPLOAD PRIMARY ASSET
+                </span>
+              </div>
+            )}
           </div>
           <div className={styles.imageOptions}>
             <div className={`${styles.emptyImages}`}>
