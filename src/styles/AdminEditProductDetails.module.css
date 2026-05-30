@@ -305,6 +305,12 @@ input {
   display: block;
 }
 
+.secondaryImages {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
 /* .primaryImageInput {
   display: none;
 } */

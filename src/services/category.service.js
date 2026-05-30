@@ -1,9 +1,10 @@
 import api from "../api/axios";
+import API_ROUTES from "../api/apiEndpoints";
 
 export const addNewCategoryService = async ({ newCategory, token }) => {
   try {
     const response = await api.post(
-      "/add-category",
+      API_ROUTES.category.addCategory,
       {
         name: newCategory,
       },
@@ -22,6 +23,27 @@ export const addNewCategoryService = async ({ newCategory, token }) => {
     throw (
       e?.response?.data || {
         message: "Something went wrong while adding a new category",
+      }
+    );
+  }
+};
+
+export const getAllCategoriesService = async ({ token }) => {
+  try {
+    const response = await api.get(API_ROUTES.category.getCategories, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (e) {
+    console.log(
+      "error occured while fetching current user's categories. Error: ",
+      e?.resonse?.data,
+    );
+    throw (
+      e?.response?.data || {
+        message: "Something went wrong while fetching categories list",
       }
     );
   }
