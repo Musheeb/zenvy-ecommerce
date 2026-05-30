@@ -7,6 +7,7 @@ const API_ROUTES = {
   },
   category: {
     addCategory: "/add-category",
+    getCategories: "/get-categories",
   },
 };
 

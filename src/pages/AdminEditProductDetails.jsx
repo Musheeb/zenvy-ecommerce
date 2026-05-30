@@ -2,18 +2,28 @@ import { useState, useEffect, useRef } from "react";
 import styles from "../styles/AdminEditProductDetails.module.css";
 import toast from "react-hot-toast";
 
-import { addNewCategoryService } from "../services/category.service";
+import Category from "../components/Category";
+import {
+  addNewCategoryService,
+  getAllCategoriesService,
+} from "../services/category.service";
 
 export default function AdminEditProductDetails() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showNewCategoryInput, setShowNewCategoryInput] = useState(false);
   const [newCategory, setNewCategory] = useState("");
   const [images, setImages] = useState([null, null, null, null]);
+  const [categories, setCategories] = useState([]);
 
   const categoryInputRef = useRef(null);
   const categoryInputBoxRef = useRef(null);
-  const fileInputRef = useRef(null);
 
+  const fileInputRef = useRef(null);
+  const fileInputRef2 = useRef(null);
+  const fileInputRef3 = useRef(null);
+  const fileInputRef4 = useRef(null);
+
+  //To handle category mouse click effect.
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -30,6 +40,18 @@ export default function AdminEditProductDetails() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  //To get all the categories.
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    async function getCategories() {
+      const categoriesList = await getAllCategoriesService({ token });
+      setCategories(categoriesList?.data?.data);
+    }
+    getCategories();
+  }, []);
+
+  // console.log(categories);
 
   function handleSelection(event) {
     const { value } = event.target;
@@ -49,6 +71,9 @@ export default function AdminEditProductDetails() {
 
   async function handleSaveCategory() {
     try {
+      if (!newCategory) {
+        return toast.error("Category can not be empty");
+      }
       const token = localStorage.getItem("accessToken");
       const response = await addNewCategoryService({ newCategory, token });
       toast.success(response.data.message);
@@ -61,13 +86,15 @@ export default function AdminEditProductDetails() {
     }
   }
 
-  function handleImageCardClick() {
-    fileInputRef.current.click();
+  function handleImageCardClick(ref) {
+    // console.log("Upload image card clicked");
+    ref.current.click();
   }
 
   // console.log(images);
 
   function handleImageSelection(index, event) {
+    // console.log(index);
     // const file = Array.from(event.target.files[0]);
     const file = event.target.files[0];
     if (!file) return;
@@ -120,11 +147,16 @@ export default function AdminEditProductDetails() {
                 onChange={handleSelection}
               >
                 <option value="select">Select Category</option>
-                <option value="category1">cat 1</option>
-                <option value="category2">cat 2</option>
-                <option value="category3">cat 3</option>
-                <option value="category4">cat 4</option>
-                <option value="category5">cat 5</option>
+                {categories.length &&
+                  categories.map((cat) => {
+                    return (
+                      <Category
+                        key={cat._id}
+                        value={cat._id}
+                        label={cat.name}
+                      />
+                    );
+                  })}
                 <option value="other">+ Add a new category</option>
               </select>
               {showNewCategoryInput && (
@@ -211,7 +243,10 @@ export default function AdminEditProductDetails() {
             <span className={styles.visualAssetsText}>VISUAL ASSETS</span>
             <span className={styles.upto4ImagesText}>Up to 4 images</span>
           </div>
-          <div className={styles.imageCard} onClick={handleImageCardClick}>
+          <div
+            className={styles.imageCard}
+            onClick={() => handleImageCardClick(fileInputRef)}
+          >
             <input
               type="file"
               accept="image/*"
@@ -242,14 +277,68 @@ export default function AdminEditProductDetails() {
             )}
           </div>
           <div className={styles.imageOptions}>
-            <div className={`${styles.emptyImages}`}>
-              <span className="material-symbols-outlined">add</span>
+            <div
+              className={`${styles.emptyImages}`}
+              onClick={() => handleImageCardClick(fileInputRef2)}
+            >
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef2}
+                hidden
+                className={styles.primaryImageInput}
+                onChange={(event) => handleImageSelection(1, event)}
+              />
+              {!images[1] ? (
+                <span className="material-symbols-outlined">add</span>
+              ) : (
+                <img
+                  src={images[1]?.preview}
+                  className={styles.secondaryImages}
+                />
+              )}
             </div>
-            <div className={`${styles.emptyImages}`}>
-              <span className="material-symbols-outlined">add</span>
+            <div
+              className={`${styles.emptyImages}`}
+              onClick={() => handleImageCardClick(fileInputRef3)}
+            >
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef3}
+                hidden
+                className={styles.primaryImageInput}
+                onChange={(event) => handleImageSelection(2, event)}
+              />
+              {!images[2] ? (
+                <span className="material-symbols-outlined">add</span>
+              ) : (
+                <img
+                  src={images[2]?.preview}
+                  className={styles.secondaryImages}
+                />
+              )}
             </div>
-            <div className={`${styles.emptyImages}`}>
-              <span className="material-symbols-outlined">add</span>
+            <div
+              className={`${styles.emptyImages}`}
+              onClick={() => handleImageCardClick(fileInputRef4)}
+            >
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef4}
+                hidden
+                className={styles.primaryImageInput}
+                onChange={(event) => handleImageSelection(3, event)}
+              />
+              {!images[3] ? (
+                <span className="material-symbols-outlined">add</span>
+              ) : (
+                <img
+                  src={images[3]?.preview}
+                  className={styles.secondaryImages}
+                />
+              )}
             </div>
           </div>
           <hr className={styles.horizontalRulerInImageSection} />

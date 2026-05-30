@@ -1,6 +1,7 @@
 import styles from "../styles/AdminDashboard.module.css";
 
 import { useUnderConstructionNavigation } from "../hooks/useUnderConstructionNavigation";
+import { useAddNewProductNavigation } from "../hooks/navigation";
 
 import ActivityCard from "../components/ActivityCard";
 
@@ -30,6 +31,7 @@ const activityData = [
 
 export default function AdminDashboard() {
   const goToUnderConstruction = useUnderConstructionNavigation();
+  const goToAddNewProductDetail = useAddNewProductNavigation();
   return (
     <div className={styles.container}>
       <div className={styles.dashboardTopContent}>
@@ -122,6 +124,7 @@ export default function AdminDashboard() {
           <span className={styles.quickActionText}>Quick Actions</span>
           <button
             className={`${styles.quickActionButtons} ${styles.addNewProductButton}`}
+            onClick={goToAddNewProductDetail}
           >
             ADD NEW PRODUCT{" "}
             <span className="material-symbols-outlined">start</span>
