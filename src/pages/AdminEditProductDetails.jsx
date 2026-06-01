@@ -7,6 +7,7 @@ import {
   addNewCategoryService,
   getAllCategoriesService,
 } from "../services/category.service";
+import { addProductService } from "../services/product.service";
 
 export default function AdminEditProductDetails() {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -14,6 +15,15 @@ export default function AdminEditProductDetails() {
   const [newCategory, setNewCategory] = useState("");
   const [images, setImages] = useState([null, null, null, null]);
   const [categories, setCategories] = useState([]);
+
+  const [payload, setPayload] = useState({
+    productTitle: "",
+    category: "",
+    sku: "",
+    description: "",
+    quantity: 0,
+    price: "",
+  });
 
   const categoryInputRef = useRef(null);
   const categoryInputBoxRef = useRef(null);
@@ -54,8 +64,14 @@ export default function AdminEditProductDetails() {
   // console.log(categories);
 
   function handleSelection(event) {
-    const { value } = event.target;
+    const { name, value } = event.target;
     setSelectedCategory(value);
+    setPayload((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
     if (value === "other") {
       setShowNewCategoryInput(true);
     } else {
@@ -109,6 +125,18 @@ export default function AdminEditProductDetails() {
     setImages(updatedImages);
   }
 
+  // console.log("Payload -> ", payload);
+
+  function handlePayload(event) {
+    const { name, value } = event.target;
+    setPayload((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.topContentWrapper}>
@@ -133,9 +161,11 @@ export default function AdminEditProductDetails() {
           <input
             type="text"
             id="productTitle"
-            name="productTitle"
+            name="title"
             placeholder="Cricket Bat (Oval Handle - Maximum Length)"
             className={styles.productNameInput}
+            value={payload.title}
+            onChange={handlePayload}
           />
           <div className={styles.categoryAndSkuWrapper}>
             <div className={styles.categoryWrapper}>
@@ -145,6 +175,7 @@ export default function AdminEditProductDetails() {
                 id="category"
                 className={styles.selectCategoryTag}
                 onChange={handleSelection}
+                value={payload.category}
               >
                 <option value="select">Select Category</option>
                 {categories.length &&
@@ -187,9 +218,11 @@ export default function AdminEditProductDetails() {
               <input
                 type="text"
                 id="skuIdentifier"
-                name="skuIdentifier"
+                name="sku"
                 placeholder="M-FRN-2026-001"
                 className={styles.skuIdentifierInput}
+                value={payload.sku}
+                onChange={handlePayload}
               />
             </div>
           </div>
@@ -197,10 +230,12 @@ export default function AdminEditProductDetails() {
             <div className={styles.detailedDescriptionWrapper}>
               <label htmlFor="detailedDescription">DETAILED DESCRIPTION</label>
               <textarea
-                name="detailedDescription"
                 id="detailedDescription"
                 placeholder="Enter the editorial narrative of the product..."
                 className={styles.textAreaOfDetailedDescription}
+                name="description"
+                value={payload.description}
+                onChange={handlePayload}
               ></textarea>
             </div>
             <div className={styles.quantityWrapperWithLabel}>
@@ -212,6 +247,8 @@ export default function AdminEditProductDetails() {
                   placeholder="0"
                   className={styles.quantityInput}
                   name="quantity"
+                  value={payload.quantity}
+                  onChange={handlePayload}
                 />
               </div>
             </div>
@@ -227,6 +264,9 @@ export default function AdminEditProductDetails() {
                   type="number"
                   placeholder="0.00"
                   className={styles.priceInput}
+                  name="price"
+                  value={payload.price}
+                  onChange={handlePayload}
                 />
               </span>
             </div>
