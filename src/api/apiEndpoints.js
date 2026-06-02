@@ -9,6 +9,9 @@ const API_ROUTES = {
     addCategory: "/add-category",
     getCategories: "/get-categories",
   },
+  product: {
+    addProduct: "/add-product",
+  },
 };
 
 export default API_ROUTES;

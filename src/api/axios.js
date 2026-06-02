@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 import { ROUTES } from "../routes/routes";
 
 const api = axios.create({
@@ -11,7 +12,10 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem("accessToken");
-      window.location.href = ROUTES.LOGIN;
+      toast.error("Session expired. Please log in again.");
+      setTimeout(() => {
+        window.location.href = ROUTES.LOGIN;
+      }, 2000);
     }
     return Promise.reject(error);
   },

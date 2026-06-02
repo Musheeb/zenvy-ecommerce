@@ -13,17 +13,19 @@ export default function AdminEditProductDetails() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showNewCategoryInput, setShowNewCategoryInput] = useState(false);
   const [newCategory, setNewCategory] = useState("");
-  const [images, setImages] = useState([null, null, null, null]);
+  const imagesDefaultState = [null, null, null, null];
+  const [images, setImages] = useState(imagesDefaultState);
   const [categories, setCategories] = useState([]);
 
-  const [payload, setPayload] = useState({
+  const defaultPayloadState = {
     productTitle: "",
     category: "",
     sku: "",
     description: "",
     quantity: 0,
     price: "",
-  });
+  };
+  const [payload, setPayload] = useState(defaultPayloadState);
 
   const categoryInputRef = useRef(null);
   const categoryInputBoxRef = useRef(null);
@@ -137,6 +139,19 @@ export default function AdminEditProductDetails() {
     });
   }
 
+  async function handleSaveProduct() {
+    try {
+      const response = await addProductService({ payload, images });
+      if (response) {
+        setImages(imagesDefaultState);
+        setPayload(defaultPayloadState);
+        return toast.success(response.data.message);
+      }
+    } catch (e) {
+      return toast.error(e.message || "Something went wrong");
+    }
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.topContentWrapper}>
@@ -161,10 +176,10 @@ export default function AdminEditProductDetails() {
           <input
             type="text"
             id="productTitle"
-            name="title"
+            name="productTitle"
             placeholder="Cricket Bat (Oval Handle - Maximum Length)"
             className={styles.productNameInput}
-            value={payload.title}
+            value={payload.productTitle}
             onChange={handlePayload}
           />
           <div className={styles.categoryAndSkuWrapper}>
@@ -245,6 +260,7 @@ export default function AdminEditProductDetails() {
                   type="number"
                   id="quantity"
                   placeholder="0"
+                  min="0"
                   className={styles.quantityInput}
                   name="quantity"
                   value={payload.quantity}
@@ -263,6 +279,7 @@ export default function AdminEditProductDetails() {
                 <input
                   type="number"
                   placeholder="0.00"
+                  min="0"
                   className={styles.priceInput}
                   name="price"
                   value={payload.price}
@@ -384,6 +401,7 @@ export default function AdminEditProductDetails() {
           <hr className={styles.horizontalRulerInImageSection} />
           <button
             className={`${styles.buttonsInImageSection} ${styles.saveProductButton}`}
+            onClick={handleSaveProduct}
           >
             SAVE PRODUCT
           </button>
