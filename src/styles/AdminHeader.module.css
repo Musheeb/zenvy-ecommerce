@@ -22,6 +22,10 @@
   color: black;
 }
 
+.selectedLink {
+  color: #2a303d;
+}
+
 .icons {
   font-size: 30px;
   cursor: pointer;
