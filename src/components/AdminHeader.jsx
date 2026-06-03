@@ -6,20 +6,37 @@ import { ROUTES } from "../routes/routes";
 import { useUnderConstructionNavigation } from "../hooks/useUnderConstructionNavigation";
 import { useDashboardNavigation } from "../hooks/useDashboardNavigation";
 
-export default function AdminHeader() {
+export default function AdminHeader(props) {
   const location = useLocation();
   const path = location.pathname;
   const goToUnderConstruction = useUnderConstructionNavigation();
   const goToDashboard = useDashboardNavigation();
+  const selectedOption = props.selectedOption;
 
   return (
     <div className={styles.container}>
       <div className={styles.flexStartPortion}>
-        <span className={styles.zenvy} onClick={goToDashboard}>
+        <span
+          className={styles.zenvy}
+          onClick={() => {
+            goToDashboard();
+            props.handleSelectedOption({ dashboard: true });
+          }}
+        >
           ZENVY
         </span>
         <ul className={styles.optionList}>
-          <Link to={ROUTES.ADMIN_DASHBOARD} className={`${styles.links}`}>Dashboard</Link>
+          <Link
+            to={ROUTES.ADMIN_DASHBOARD}
+            onClick={() => props.handleSelectedOption({ dashboard: true })}
+            className={
+              selectedOption.dashboard
+                ? `${styles.links} ${styles.selectedLink}`
+                : `${styles.links}`
+            }
+          >
+            Dashboard
+          </Link>
           <Link className={`${styles.links}`} to={ROUTES.UNDER_CONSTRUCTION}>
             Collections
           </Link>

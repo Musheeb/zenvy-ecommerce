@@ -5,15 +5,18 @@ import { useUnderConstructionNavigation } from "../hooks/useUnderConstructionNav
 import { useDashboardNavigation } from "../hooks/useDashboardNavigation";
 import { useInventoryNavigation } from "../hooks/navigation";
 
-export default function SideBar() {
+export default function SideBar(props) {
   const goToUnderConstruction = useUnderConstructionNavigation();
   const goToDashboard = useDashboardNavigation();
   const goToInventory = useInventoryNavigation();
   const navigate = useNavigate();
+  const selectedOption = props.selectedOption;
+
   function handleLogout() {
     //todo - add a pop up here to ask user to logout. (Logout cofirmation)
     navigate("/login");
   }
+
   return (
     <div className={styles.container}>
       <div className={styles.sidebarHeading}>
@@ -21,29 +24,89 @@ export default function SideBar() {
         <span className={styles.textInSidebar}>MANAGEMENT SUITE</span>
       </div>
       <div className={styles.sidebarMiddleOptions}>
-        <div className={styles.sidebarOptions} onClick={goToDashboard}>
+        <div
+          className={
+            selectedOption.dashboard
+              ? `${styles.sidebarOptions} ${styles.selectedSideBarOption}`
+              : `${styles.sidebarOptions}`
+          }
+          onClick={() => {
+            goToDashboard();
+            props.handleSelectedOption({ dashboard: true });
+          }}
+        >
           <span className="material-symbols-outlined">dashboard</span>
           <span>DASHBOARD</span>
         </div>
-        <div className={styles.sidebarOptions} onClick={goToInventory}>
+        <div
+          className={
+            selectedOption.inventory
+              ? `${styles.sidebarOptions} ${styles.selectedSideBarOption}`
+              : `${styles.sidebarOptions}`
+          }
+          onClick={() => {
+            goToInventory();
+            props.handleSelectedOption({ inventory: true });
+          }}
+        >
           <span className="material-symbols-outlined">inventory</span>
           <span>INVENTORY</span>
         </div>
-        <div className={styles.sidebarOptions} onClick={goToUnderConstruction}>
+        <div
+          className={
+            selectedOption.orders
+              ? `${styles.sidebarOptions} ${styles.selectedSideBarOption}`
+              : `${styles.sidebarOptions}`
+          }
+          onClick={() => {
+            goToUnderConstruction();
+            props.handleSelectedOption({ orders: true });
+          }}
+        >
           <span className="material-symbols-outlined">orders</span>
           <span>ORDERS</span>
         </div>
-        <div className={styles.sidebarOptions} onClick={goToUnderConstruction}>
+        <div
+          className={
+            selectedOption.customers
+              ? `${styles.sidebarOptions} ${styles.selectedSideBarOption}`
+              : `${styles.sidebarOptions}`
+          }
+          onClick={() => {
+            goToUnderConstruction();
+            props.handleSelectedOption({ customers: true });
+          }}
+        >
           <span className="material-symbols-outlined">groups</span>
           <span>CUSTOMERS</span>
         </div>
-        <div className={styles.sidebarOptions} onClick={goToUnderConstruction}>
+        <div
+          className={
+            selectedOption.analytics
+              ? `${styles.sidebarOptions} ${styles.selectedSideBarOption}`
+              : `${styles.sidebarOptions}`
+          }
+          onClick={() => {
+            goToUnderConstruction();
+            props.handleSelectedOption({ analytics: true });
+          }}
+        >
           <span className="material-symbols-outlined">analytics</span>
           <span>ANALYTICS</span>
         </div>
       </div>
       <div className={styles.sidebarBottomOptions}>
-        <div className={styles.sidebarOptions} onClick={goToUnderConstruction}>
+        <div
+          className={
+            selectedOption.support
+              ? `${styles.sidebarOptions} ${styles.selectedSideBarOption}`
+              : `${styles.sidebarOptions}`
+          }
+          onClick={() => {
+            goToUnderConstruction();
+            props.handleSelectedOption({ support: true });
+          }}
+        >
           <span className="material-symbols-outlined">help</span>
           <span>SUPPORT</span>
         </div>
