@@ -96,6 +96,21 @@ export default function AdminEditProductDetails() {
       const response = await addNewCategoryService({ newCategory, token });
       toast.success(response.data.message);
       setShowNewCategoryInput(false);
+      const catWithNewlyAddedCat = [
+        response?.data?.data,
+        ...(categories || []),
+      ];
+      setCategories(catWithNewlyAddedCat);
+      setNewCategory("");
+      setSelectedCategory(
+        response?.data?.data?.name || "Please select category",
+      );
+      setPayload((prev) => {
+        return {
+          ...prev,
+          category: response?.data?.data?._id,
+        };
+      });
       return;
     } catch (e) {
       toast.error(
@@ -193,7 +208,7 @@ export default function AdminEditProductDetails() {
                 value={payload.category}
               >
                 <option value="select">Select Category</option>
-                {categories.length &&
+                {categories?.length &&
                   categories.map((cat) => {
                     return (
                       <Category

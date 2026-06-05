@@ -1,6 +1,8 @@
 import styles from "../styles/AdminSidebar.module.css";
 
-import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../routes/routes";
+
+import { useNavigate, useLocation } from "react-router-dom";
 import { useUnderConstructionNavigation } from "../hooks/useUnderConstructionNavigation";
 import { useDashboardNavigation } from "../hooks/useDashboardNavigation";
 import { useInventoryNavigation } from "../hooks/navigation";
@@ -10,6 +12,7 @@ export default function SideBar(props) {
   const goToDashboard = useDashboardNavigation();
   const goToInventory = useInventoryNavigation();
   const navigate = useNavigate();
+  const path = useLocation().pathname;
   const selectedOption = props.selectedOption;
 
   function handleLogout() {
@@ -26,13 +29,12 @@ export default function SideBar(props) {
       <div className={styles.sidebarMiddleOptions}>
         <div
           className={
-            selectedOption.dashboard
+            path === ROUTES.ADMIN_DASHBOARD
               ? `${styles.sidebarOptions} ${styles.selectedSideBarOption}`
               : `${styles.sidebarOptions}`
           }
           onClick={() => {
             goToDashboard();
-            props.handleSelectedOption({ dashboard: true });
           }}
         >
           <span className="material-symbols-outlined">dashboard</span>
@@ -40,13 +42,13 @@ export default function SideBar(props) {
         </div>
         <div
           className={
-            selectedOption.inventory
+            path === ROUTES.ADMIN_INVENTORY ||
+            path === ROUTES.ADMIN_EDIT_PRODUCT
               ? `${styles.sidebarOptions} ${styles.selectedSideBarOption}`
               : `${styles.sidebarOptions}`
           }
           onClick={() => {
             goToInventory();
-            props.handleSelectedOption({ inventory: true });
           }}
         >
           <span className="material-symbols-outlined">inventory</span>
