@@ -6,12 +6,11 @@ import { ROUTES } from "../routes/routes";
 import { useUnderConstructionNavigation } from "../hooks/useUnderConstructionNavigation";
 import { useDashboardNavigation } from "../hooks/useDashboardNavigation";
 
-export default function AdminHeader(props) {
+export default function AdminHeader() {
   const location = useLocation();
   const path = location.pathname;
   const goToUnderConstruction = useUnderConstructionNavigation();
   const goToDashboard = useDashboardNavigation();
-  const selectedOption = props.selectedOption;
 
   return (
     <div className={styles.container}>
@@ -20,7 +19,6 @@ export default function AdminHeader(props) {
           className={styles.zenvy}
           onClick={() => {
             goToDashboard();
-            props.handleSelectedOption({ dashboard: true });
           }}
         >
           ZENVY
@@ -28,9 +26,8 @@ export default function AdminHeader(props) {
         <ul className={styles.optionList}>
           <Link
             to={ROUTES.ADMIN_DASHBOARD}
-            onClick={() => props.handleSelectedOption({ dashboard: true })}
             className={
-              selectedOption.dashboard
+              path === ROUTES.ADMIN_DASHBOARD
                 ? `${styles.links} ${styles.selectedLink}`
                 : `${styles.links}`
             }
@@ -46,7 +43,7 @@ export default function AdminHeader(props) {
         </ul>
       </div>
       <div className={styles.flexEndPortion}>
-        {path === "/admin/inventory" && (
+        {path === ROUTES.ADMIN_INVENTORY && (
           <div className={styles.inventorySearchBarWrapper}>
             <span
               className={`material-symbols-outlined ${styles.magnifyingGlass}`}
