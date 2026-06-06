@@ -218,7 +218,10 @@ export default function AdminEditProductDetails() {
                       />
                     );
                   })}
-                <option value="other">+ Add a new category</option>
+                <option value="other"> + Add a new category</option>
+                {categories.length && (
+                  <option value="delete"> - Delete categories</option>
+                )}
               </select>
               {showNewCategoryInput && (
                 <div
@@ -228,7 +231,7 @@ export default function AdminEditProductDetails() {
                   <input
                     ref={categoryInputBoxRef}
                     type="text"
-                    placeholder="Enter new category"
+                    placeholder="Enter a new category"
                     value={newCategory}
                     onChange={(e) => setNewCategory(e.target.value)}
                     className={styles.newCategoryInput}
