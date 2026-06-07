@@ -7,15 +7,19 @@ import {
   addNewCategoryService,
   getAllCategoriesService,
 } from "../services/category.service";
+import { useInventoryNavigation } from "../hooks/navigation";
 import { addProductService } from "../services/product.service";
 
 export default function AdminEditProductDetails() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showNewCategoryInput, setShowNewCategoryInput] = useState(false);
+  const [showCategoryList, setShowCategoryList] = useState(false);
   const [newCategory, setNewCategory] = useState("");
   const imagesDefaultState = [null, null, null, null];
   const [images, setImages] = useState(imagesDefaultState);
   const [categories, setCategories] = useState([]);
+  const [deleteCategoryConfirmation, setDeleteCategoryConfirmation] =
+    useState(false);
 
   const defaultPayloadState = {
     productTitle: "",
@@ -29,11 +33,14 @@ export default function AdminEditProductDetails() {
 
   const categoryInputRef = useRef(null);
   const categoryInputBoxRef = useRef(null);
+  const deleteConfirmationBoxRef = useRef(null);
 
   const fileInputRef = useRef(null);
   const fileInputRef2 = useRef(null);
   const fileInputRef3 = useRef(null);
   const fileInputRef4 = useRef(null);
+
+  const goToInventory = useInventoryNavigation();
 
   //To handle category mouse click effect.
   useEffect(() => {
@@ -53,6 +60,23 @@ export default function AdminEditProductDetails() {
     };
   }, []);
 
+  //To handle delete category confirmation box.
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        deleteConfirmationBoxRef.current &&
+        !deleteConfirmationBoxRef.current.contains(event.target)
+      ) {
+        setDeleteCategoryConfirmation(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   //To get all the categories.
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -62,24 +86,6 @@ export default function AdminEditProductDetails() {
     }
     getCategories();
   }, []);
-
-  // console.log(categories);
-
-  function handleSelection(event) {
-    const { name, value } = event.target;
-    setSelectedCategory(value);
-    setPayload((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-    if (value === "other") {
-      setShowNewCategoryInput(true);
-    } else {
-      setShowNewCategoryInput(false);
-    }
-  }
 
   useEffect(() => {
     if (showNewCategoryInput) {
@@ -120,15 +126,10 @@ export default function AdminEditProductDetails() {
   }
 
   function handleImageCardClick(ref) {
-    // console.log("Upload image card clicked");
     ref.current.click();
   }
 
-  // console.log(images);
-
   function handleImageSelection(index, event) {
-    // console.log(index);
-    // const file = Array.from(event.target.files[0]);
     const file = event.target.files[0];
     if (!file) return;
 
@@ -141,8 +142,6 @@ export default function AdminEditProductDetails() {
 
     setImages(updatedImages);
   }
-
-  // console.log("Payload -> ", payload);
 
   function handlePayload(event) {
     const { name, value } = event.target;
@@ -160,11 +159,16 @@ export default function AdminEditProductDetails() {
       if (response) {
         setImages(imagesDefaultState);
         setPayload(defaultPayloadState);
+        setSelectedCategory("");
         return toast.success(response.data.message);
       }
     } catch (e) {
       return toast.error(e.message || "Something went wrong");
     }
+  }
+
+  function handleShowCategoriesListAction() {
+    setShowCategoryList((prev) => !prev);
   }
 
   return (
@@ -200,29 +204,74 @@ export default function AdminEditProductDetails() {
           <div className={styles.categoryAndSkuWrapper}>
             <div className={styles.categoryWrapper}>
               <label htmlFor="category">CATEGORY</label>
-              <select
-                name="category"
+              <div
                 id="category"
-                className={styles.selectCategoryTag}
-                onChange={handleSelection}
-                value={payload.category}
+                className={styles.category}
+                onClick={handleShowCategoriesListAction}
               >
-                <option value="select">Select Category</option>
-                {categories?.length &&
-                  categories.map((cat) => {
-                    return (
-                      <Category
-                        key={cat._id}
-                        value={cat._id}
-                        label={cat.name}
-                      />
-                    );
-                  })}
-                <option value="other"> + Add a new category</option>
-                {categories.length && (
-                  <option value="delete"> - Delete categories</option>
-                )}
-              </select>
+                <span>
+                  {selectedCategory ? selectedCategory : "Select category"}
+                </span>
+                <span
+                  className={`material-symbols-outlined ${styles.downArrowInCategory}`}
+                >
+                  keyboard_arrow_down
+                </span>
+              </div>
+              {showCategoryList && (
+                <div className={styles.categoryListWrapper}>
+                  {categories?.length &&
+                    categories.map((cat) => {
+                      return (
+                        <Category
+                          key={cat._id}
+                          _id={cat._id}
+                          value={cat._id}
+                          label={cat.name}
+                          selectCategory={setSelectedCategory}
+                          showDeleteCategoryConfirmation={
+                            setDeleteCategoryConfirmation
+                          }
+                          handleCategoryList={setShowCategoryList}
+                          setPayload={setPayload}
+                        />
+                      );
+                    })}
+                  <div
+                    className={styles.addNewCatWrapper}
+                    onClick={() => setShowNewCategoryInput(true)}
+                  >
+                    <span>+ Add a new category</span>
+                  </div>
+                </div>
+              )}
+              {deleteCategoryConfirmation && (
+                <div className={styles.deleteCategoryConfirmationWrapper}>
+                  <div
+                    className={styles.deleteCategoryBox}
+                    ref={deleteConfirmationBoxRef}
+                  >
+                    <p className={styles.deleteCategoryConfirmation}>
+                      Are you sure you want to delete this category? This action
+                      cannot be undone. The category and all products associated
+                      with it will be permanently deleted.
+                    </p>
+                    <div className={styles.deleteConfirmationButtonsWrapper}>
+                      <button
+                        className={`${styles.deleteConfirmationButtons} ${styles.deleteConfirmationSure}`}
+                      >
+                        I'm Sure
+                      </button>
+                      <button
+                        className={`${styles.deleteConfirmationButtons} ${styles.deleteConfirmationCancel}`}
+                        onClick={() => setDeleteCategoryConfirmation(false)}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
               {showNewCategoryInput && (
                 <div
                   ref={categoryInputRef}
@@ -425,6 +474,7 @@ export default function AdminEditProductDetails() {
           </button>
           <button
             className={`${styles.buttonsInImageSection} ${styles.cancelButton}`}
+            onClick={goToInventory}
           >
             CANCEL
           </button>

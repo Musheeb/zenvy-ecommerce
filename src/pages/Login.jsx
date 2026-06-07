@@ -48,6 +48,7 @@ export default function Login() {
       navigate(ROUTES.ADMIN_DASHBOARD); //Redirect to dahsboard according to user's role.
     } catch (e) {
       toast.error(e.message || "Something went wrong");
+      setUserCredentials(userInput);
     } finally {
       setIsLoading(false); // Don't forget to set this isLoading false on logout.
     }

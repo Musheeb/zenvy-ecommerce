@@ -1,0 +1,23 @@
+.singleCategoryWrapper {
+  /* border: 1px solid orange; */
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.singleCategoryWrapper:hover {
+  background-color: #afcadc;
+  border-radius: 3px;
+  /* transform: scale(1.1); */
+}
+
+.deleteCategoryBin {
+  color: tomato;
+  margin-left: auto;
+  transition: transform 0.2s ease;
+}
+
+.deleteCategoryBin:hover {
+  transform: scale(1.2);
+}

@@ -90,13 +90,107 @@ input {
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  cursor: pointer;
 }
 
-.selectCategoryTag {
+/* .selectCategoryTag {
   height: 40px;
   font-size: medium;
   background-color: #e6eeea;
   border: none;
+} */
+
+.category {
+  height: 40px;
+  font-size: medium;
+  background-color: #e6eeea;
+  border: none;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 10px;
+}
+
+.downArrowInCategory {
+  margin-left: auto;
+  /* cursor: pointer; */
+  transition: transform 0.2s ease;
+}
+
+.downArrowInCategory:hover {
+  transform: scale(1.2);
+}
+
+.categoryListWrapper {
+  position: absolute;
+  min-height: 100px;
+  max-height: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: #e2f3ff;
+  padding: 5px;
+  overflow: auto;
+  overflow-x: hidden;
+  top: 100%;
+  left: 0;
+  margin-top: 10px;
+  width: 100%;
+  z-index: 1000;
+  /* border: 4px solid orange; */
+}
+
+.deleteCategoryConfirmationWrapper {
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteCategoryBox {
+  min-height: 300px;
+  width: 50%;
+  background-color: #afcadc;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+}
+
+.deleteCategoryConfirmation {
+  font-size: 1.2em;
+  color: #474747;
+}
+
+.deleteConfirmationButtonsWrapper {
+  margin-top: 20px;
+  width: 60%;
+  display: flex;
+  gap: 20px;
+}
+
+.deleteConfirmationButtons {
+  font-size: large;
+}
+
+.deleteConfirmationSure {
+  color: tomato;
+}
+
+.deleteConfirmationCancel {
+  color: #607b8b;
 }
 
 .addCategoryWrapper {
