@@ -8,6 +8,7 @@ const API_ROUTES = {
   category: {
     addCategory: "/add-category",
     getCategories: "/get-categories",
+    deleteCategory: (categoryId) => `/delete-category/${categoryId}`,
   },
   product: {
     addProduct: "/add-product",

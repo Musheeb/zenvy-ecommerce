@@ -48,3 +48,28 @@ export const getAllCategoriesService = async ({ token }) => {
     );
   }
 };
+
+export const deleteCategory = async ({ categoryId }) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const response = await api.delete(
+      API_ROUTES.category.deleteCategory(categoryId),
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (e) {
+    console.log(
+      "error occured while deleting the category. Error: ",
+      e?.response?.data,
+    );
+    throw (
+      e?.resonse?.data || {
+        message: "Something went wrong while deleting the category",
+      }
+    );
+  }
+};
