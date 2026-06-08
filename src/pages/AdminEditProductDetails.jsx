@@ -3,9 +3,11 @@ import styles from "../styles/AdminEditProductDetails.module.css";
 import toast from "react-hot-toast";
 
 import Category from "../components/Category";
+import Loader from "../components/Loader";
 import {
   addNewCategoryService,
   getAllCategoriesService,
+  deleteCategory,
 } from "../services/category.service";
 import { useInventoryNavigation } from "../hooks/navigation";
 import { addProductService } from "../services/product.service";
@@ -20,6 +22,8 @@ export default function AdminEditProductDetails() {
   const [categories, setCategories] = useState([]);
   const [deleteCategoryConfirmation, setDeleteCategoryConfirmation] =
     useState(false);
+  const [addProductLoader, setAddPorductLoader] = useState(false);
+  const [categoryToDelete, setCategoryToDelete] = useState("");
 
   const defaultPayloadState = {
     productTitle: "",
@@ -155,14 +159,17 @@ export default function AdminEditProductDetails() {
 
   async function handleSaveProduct() {
     try {
+      setAddPorductLoader(true);
       const response = await addProductService({ payload, images });
       if (response) {
         setImages(imagesDefaultState);
         setPayload(defaultPayloadState);
         setSelectedCategory("");
+        setAddPorductLoader(false);
         return toast.success(response.data.message);
       }
     } catch (e) {
+      setAddPorductLoader(false);
       return toast.error(e.message || "Something went wrong");
     }
   }
@@ -171,8 +178,19 @@ export default function AdminEditProductDetails() {
     setShowCategoryList((prev) => !prev);
   }
 
+  async function handleCategoryDeletion() {
+    try {
+      const response = await deleteCategory({ categoryId: categoryToDelete });
+      setDeleteCategoryConfirmation(false);
+      return toast.success(response.message);
+    } catch (e) {
+      return toast.error(e.message || "Something went wrong");
+    }
+  }
+
   return (
     <div className={styles.container}>
+      {addProductLoader && <Loader />}
       <div className={styles.topContentWrapper}>
         <div className={styles.topContentFirstLineWrapper}>
           <span className={styles.inventoryTextAndIconWrapper}>
@@ -234,6 +252,7 @@ export default function AdminEditProductDetails() {
                           }
                           handleCategoryList={setShowCategoryList}
                           setPayload={setPayload}
+                          setCategoryToDelete={setCategoryToDelete}
                         />
                       );
                     })}
@@ -259,12 +278,16 @@ export default function AdminEditProductDetails() {
                     <div className={styles.deleteConfirmationButtonsWrapper}>
                       <button
                         className={`${styles.deleteConfirmationButtons} ${styles.deleteConfirmationSure}`}
+                        onClick={handleCategoryDeletion}
                       >
                         I'm Sure
                       </button>
                       <button
                         className={`${styles.deleteConfirmationButtons} ${styles.deleteConfirmationCancel}`}
-                        onClick={() => setDeleteCategoryConfirmation(false)}
+                        onClick={() => {
+                          setDeleteCategoryConfirmation(false);
+                          setCategoryToDelete("");
+                        }}
                       >
                         Cancel
                       </button>

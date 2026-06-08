@@ -21,6 +21,7 @@ export default function Category(props) {
         onClick={(e) => {
           e.stopPropagation();
           props.showDeleteCategoryConfirmation(true);
+          props.setCategoryToDelete(props._id);
         }}
       >
         delete
