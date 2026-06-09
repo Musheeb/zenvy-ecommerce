@@ -11,6 +11,7 @@ import {
 } from "../services/category.service";
 import { useInventoryNavigation } from "../hooks/navigation";
 import { addProductService } from "../services/product.service";
+import userSchema from "../schemas/addProductSchema";
 
 export default function AdminEditProductDetails() {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -23,6 +24,7 @@ export default function AdminEditProductDetails() {
   const [deleteCategoryConfirmation, setDeleteCategoryConfirmation] =
     useState(false);
   const [addProductLoader, setAddPorductLoader] = useState(false);
+  const [deleteCategoryLoader, setDeleteCategoryLoader] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState("");
 
   const defaultPayloadState = {
@@ -32,8 +34,11 @@ export default function AdminEditProductDetails() {
     description: "",
     quantity: 0,
     price: "",
+    currency: "USD",
   };
+
   const [payload, setPayload] = useState(defaultPayloadState);
+  const [errors, setErrors] = useState({});
 
   const categoryInputRef = useRef(null);
   const categoryInputBoxRef = useRef(null);
@@ -160,6 +165,24 @@ export default function AdminEditProductDetails() {
   async function handleSaveProduct() {
     try {
       setAddPorductLoader(true);
+      const validatePayload = userSchema.safeParse({
+        ...payload,
+        quantity: Number(payload.quantity),
+        price: Number(payload.price),
+      });
+      console.log("Validate payload -> ", validatePayload);
+      if (!validatePayload.success) {
+        // const fieldsErrors = {};
+        // validatePayload.error.issues.forEach((issue) => {
+        //   fieldsErrors[issue.path[0]] = issue.message;
+        // });
+        // setErrors(fieldsErrors);
+        // console.log("Error: ", fieldsErrors);
+        const firstError = validatePayload.error.issues[0].message;
+        toast.error(firstError);
+        setAddPorductLoader(false);
+        return;
+      }
       const response = await addProductService({ payload, images });
       if (response) {
         setImages(imagesDefaultState);
@@ -180,8 +203,14 @@ export default function AdminEditProductDetails() {
 
   async function handleCategoryDeletion() {
     try {
+      setDeleteCategoryLoader(true);
       const response = await deleteCategory({ categoryId: categoryToDelete });
       setDeleteCategoryConfirmation(false);
+      const fileteredCategory = categories.filter(
+        (category) => category?._id?.toString() !== categoryToDelete.toString(),
+      );
+      setCategories(fileteredCategory);
+      setDeleteCategoryLoader(false);
       return toast.success(response.message);
     } catch (e) {
       return toast.error(e.message || "Something went wrong");
@@ -190,6 +219,7 @@ export default function AdminEditProductDetails() {
 
   return (
     <div className={styles.container}>
+      {deleteCategoryLoader && <Loader />}
       {addProductLoader && <Loader />}
       <div className={styles.topContentWrapper}>
         <div className={styles.topContentFirstLineWrapper}>
