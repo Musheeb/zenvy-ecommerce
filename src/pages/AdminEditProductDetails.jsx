@@ -38,7 +38,6 @@ export default function AdminEditProductDetails() {
   };
 
   const [payload, setPayload] = useState(defaultPayloadState);
-  const [errors, setErrors] = useState({});
 
   const categoryInputRef = useRef(null);
   const categoryInputBoxRef = useRef(null);
@@ -91,7 +90,8 @@ export default function AdminEditProductDetails() {
     const token = localStorage.getItem("accessToken");
     async function getCategories() {
       const categoriesList = await getAllCategoriesService({ token });
-      setCategories(categoriesList?.data?.data);
+      console.log(categoriesList);
+      setCategories(categoriesList?.data?.data || []);
     }
     getCategories();
   }, []);
@@ -172,12 +172,6 @@ export default function AdminEditProductDetails() {
       });
       console.log("Validate payload -> ", validatePayload);
       if (!validatePayload.success) {
-        // const fieldsErrors = {};
-        // validatePayload.error.issues.forEach((issue) => {
-        //   fieldsErrors[issue.path[0]] = issue.message;
-        // });
-        // setErrors(fieldsErrors);
-        // console.log("Error: ", fieldsErrors);
         const firstError = validatePayload.error.issues[0].message;
         toast.error(firstError);
         setAddPorductLoader(false);
@@ -268,7 +262,7 @@ export default function AdminEditProductDetails() {
               </div>
               {showCategoryList && (
                 <div className={styles.categoryListWrapper}>
-                  {categories?.length &&
+                  {(categories?.length &&
                     categories.map((cat) => {
                       return (
                         <Category
@@ -285,7 +279,8 @@ export default function AdminEditProductDetails() {
                           setCategoryToDelete={setCategoryToDelete}
                         />
                       );
-                    })}
+                    })) ||
+                    []}
                   <div
                     className={styles.addNewCatWrapper}
                     onClick={() => setShowNewCategoryInput(true)}
