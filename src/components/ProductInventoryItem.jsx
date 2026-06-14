@@ -1,0 +1,58 @@
+import styles from "../styles/AdminAddProductInventory.module.css";
+
+export default function ProductInventoryItem(props) {
+  return (
+    <>
+      <tr key={props._id}>
+        <td>
+          <img
+            src={props.images[0]?.url}
+            alt={props.productTitle}
+            className={styles.productImage}
+          />
+        </td>
+        <td>
+          <div className={styles.productNameWrapper}>
+            <span className={styles.productName}>{props.productTitle}</span>
+            <span className={styles.productSku}>{props.sku}</span>
+          </div>
+        </td>
+        <td>{props.category}</td>
+        <td>{`${props.currency === "USD" ? "$" : "INR - "}${props.price}`}</td>
+        <td
+          className={
+            props.quantity > 5 ? styles.inStockWrapper : styles.lowStockWrapper
+          }
+        >
+          {props.stockStatus === "available" && props.quantity > 5
+            ? "IN STOCK"
+            : "LOW STOCK"}{" "}
+          ({props.quantity})
+        </td>
+        <td>
+          <div className={styles.actionWrapper}>
+            <div
+              className={styles.editActionWrapper}
+              onClick={props.goToEditProductDetail}
+            >
+              <span
+                className={`material-symbols-outlined ${styles.actionIcons}`}
+              >
+                edit
+              </span>
+              <span className={`${styles.actionText}`}>EDIT</span>
+            </div>
+            <div className={styles.deleteActionWrapper}>
+              <span
+                className={`material-symbols-outlined ${styles.actionIcons}`}
+              >
+                delete
+              </span>
+              <span className={`${styles.actionText}`}>DELETE</span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </>
+  );
+}
