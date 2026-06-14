@@ -1,15 +1,36 @@
 import styles from "../styles/AdminAddProductInventory.module.css";
-
-import { products } from "../utils/dummyProducts";
+import { useState, useEffect } from "react";
+import ProductInventoryItem from "../components/ProductInventoryItem";
+// import { products } from "../utils/dummyProducts";
 import { ROUTES } from "../routes/routes";
 import {
   useEditProductDetailsNavigation,
   useAddNewProductNavigation,
 } from "../hooks/navigation";
+import { getProductsService } from "../services/product.service";
 
 export default function AdminAddProductInventory() {
   const goToEditProductDetail = useEditProductDetailsNavigation();
   const goToAddNewProductDetail = useAddNewProductNavigation();
+
+  const [skip, setSkip] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [totalProductCount, setTotalProductCount] = useState(0);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    async function getProducts() {
+      const response = await getProductsService({
+        skip,
+        limit,
+        search: searchQuery,
+      });
+      setProducts(response?.data);
+      setTotalProductCount(response?.total);
+    }
+    getProducts();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -38,64 +59,28 @@ export default function AdminAddProductInventory() {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
-              <tr key={product._id}>
-                <td>
-                  <img
-                    src={product.image}
-                    alt={product.productName}
-                    className={styles.productImage}
+            {products.length > 0 ? (
+              products.map((product) => {
+                return (
+                  <ProductInventoryItem
+                    key={product._id}
+                    _id={product._id}
+                    productTitle={product.productTitle}
+                    images={product.images}
+                    sku={product.sku}
+                    category={product.categoryName}
+                    price={product.price}
+                    quantity={product.quantity}
+                    currency={product.currency}
+                    goToEditProductDetail={goToEditProductDetail}
                   />
-                </td>
-                <td>
-                  <div className={styles.productNameWrapper}>
-                    <span className={styles.productName}>
-                      {product.productName}
-                    </span>
-                    <span className={styles.productSku}>
-                      {product.skuNumber}
-                    </span>
-                  </div>
-                </td>
-                <td>{product.category}</td>
-                <td>{`${product.currency}${product.price}`}</td>
-                <td
-                  className={
-                    product.quantity > 5
-                      ? styles.inStockWrapper
-                      : styles.lowStockWrapper
-                  }
-                >
-                  {product.stockStatus === "available" && product.quantity > 5
-                    ? "IN STOCK"
-                    : "LOW STOCK"}{" "}
-                  ({product.quantity})
-                </td>
-                <td>
-                  <div className={styles.actionWrapper}>
-                    <div
-                      className={styles.editActionWrapper}
-                      onClick={goToEditProductDetail}
-                    >
-                      <span
-                        className={`material-symbols-outlined ${styles.actionIcons}`}
-                      >
-                        edit
-                      </span>
-                      <span className={`${styles.actionText}`}>EDIT</span>
-                    </div>
-                    <div className={styles.deleteActionWrapper}>
-                      <span
-                        className={`material-symbols-outlined ${styles.actionIcons}`}
-                      >
-                        delete
-                      </span>
-                      <span className={`${styles.actionText}`}>DELETE</span>
-                    </div>
-                  </div>
-                </td>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan={5}>No inventory found</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
@@ -104,9 +89,9 @@ export default function AdminAddProductInventory() {
           <span>SHOWING</span>
           <span>1</span>
           <span>-</span>
-          <span>15</span>
+          <span>10</span>
           <span>OF</span>
-          <span>124</span>
+          <span>{totalProductCount}</span>
           <span>OBJECTS</span>
         </div>
         <div className={styles.paginationCounter}>

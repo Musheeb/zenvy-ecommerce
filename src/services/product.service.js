@@ -33,3 +33,31 @@ export const addProductService = async ({ payload, images }) => {
     );
   }
 };
+
+export const getProductsService = async ({ skip, limit, search }) => {
+  try {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      toast.error("Session expired. Please log in again");
+    }
+    const response = await api.get(
+      API_ROUTES.product.getProducts(skip, limit, search),
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response?.data;
+  } catch (e) {
+    console.log(
+      "error while fetching the products list. Error: ",
+      e?.response?.data,
+    );
+    throw (
+      e?.response?.data || {
+        message: "Something went wrong while adding fetching products",
+      }
+    );
+  }
+};
