@@ -90,7 +90,7 @@ export default function AdminEditProductDetails() {
     const token = localStorage.getItem("accessToken");
     async function getCategories() {
       const categoriesList = await getAllCategoriesService({ token });
-      console.log(categoriesList);
+      // console.log(categoriesList);/
       setCategories(categoriesList?.data?.data || []);
     }
     getCategories();
@@ -170,7 +170,7 @@ export default function AdminEditProductDetails() {
         quantity: Number(payload.quantity),
         price: Number(payload.price),
       });
-      console.log("Validate payload -> ", validatePayload);
+      // console.log("Validate payload -> ", validatePayload);
       if (!validatePayload.success) {
         const firstError = validatePayload.error.issues[0].message;
         toast.error(firstError);

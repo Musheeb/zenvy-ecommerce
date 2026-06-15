@@ -61,3 +61,32 @@ export const getProductsService = async ({ skip, limit, search }) => {
     );
   }
 };
+
+export const deleteProductService = async ({ productId }) => {
+  try {
+    console.log("delete product service method called!");
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      toast.error("Session expired. Please log in again");
+    }
+    const response = await api.delete(
+      API_ROUTES.product.deleteProduct(productId),
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response?.data;
+  } catch (e) {
+    console.log(
+      "error occured while deleting the product. Error: ",
+      e?.response?.data,
+    );
+    throw (
+      e?.response?.data || {
+        message: "Something went wrong while deleting the product",
+      }
+    );
+  }
+};
