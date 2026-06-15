@@ -14,6 +14,7 @@ const API_ROUTES = {
     addProduct: "/add-product",
     getProducts: (skip, limit, search) =>
       `/get-products-list/?skip=${skip || 0}&limit=${limit || 10}&search=${search}`,
+    deleteProduct: (productId) => `/delete-product/${productId}`,
   },
 };
 

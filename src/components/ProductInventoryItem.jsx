@@ -42,7 +42,13 @@ export default function ProductInventoryItem(props) {
               </span>
               <span className={`${styles.actionText}`}>EDIT</span>
             </div>
-            <div className={styles.deleteActionWrapper}>
+            <div
+              className={styles.deleteActionWrapper}
+              onClick={() => {
+                props.deleteProductService(props._id);
+                props.setTotalProductCount((prev) => prev - 1);
+              }}
+            >
               <span
                 className={`material-symbols-outlined ${styles.actionIcons}`}
               >
