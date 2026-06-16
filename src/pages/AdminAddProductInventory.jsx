@@ -26,11 +26,33 @@ export default function AdminAddProductInventory() {
   const [products, setProducts] = useState([]);
   const [loader, setLoader] = useState(false);
 
+  // const [currentPage, setCurrentPage] = useState(Math.floor(skip / limit + 1));
+  const currentPage = Math.floor(skip / limit) + 1;
+  const [freezePageIncrement, setFreezePageIncrement] = useState(false);
+  const [freezePageDecrement, setFreezePageDecrement] = useState(false);
+
   const totalPages = Math.ceil((totalProductCount || 0) / limit);
-  const pageNumbers = Array.from(
-    { length: totalPages },
-    (_, index) => index + 1,
-  );
+
+  const visiblePages = (() => {
+    if (totalPages <= 3) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+
+    if (currentPage <= 2) {
+      return [1, 2, 3];
+    }
+
+    if (currentPage >= totalPages - 1) {
+      return [totalPages - 2, totalPages - 1, totalPages];
+    }
+
+    return [currentPage - 1, currentPage, currentPage + 1];
+  })();
+
+  // const pageNumbers = Array.from(
+  //   { length: totalPages },
+  //   (_, index) => index + 1,
+  // );
 
   useEffect(() => {
     async function getProducts() {
@@ -41,6 +63,7 @@ export default function AdminAddProductInventory() {
       });
       setProducts(response?.data);
       setTotalProductCount(response?.total);
+      setFreezePageDecrement(true);
     }
     getProducts();
   }, [totalProductCount]);
@@ -51,6 +74,38 @@ export default function AdminAddProductInventory() {
     toast.success(response?.message);
     setLoader(false);
     return;
+  }
+
+  useEffect(() => {
+    setFreezePageIncrement(currentPage >= totalPages);
+  }, [currentPage, totalPages]);
+
+  useEffect(() => {
+    setFreezePageDecrement(skip === 0);
+  }, [currentPage, totalPages]);
+
+  async function handlePageNoIncrement() {
+    const docToSkip = skip + limit;
+    const response = await getProductsService({
+      skip: docToSkip,
+      limit,
+      search: searchQuery,
+    });
+    setProducts(response?.data);
+    setTotalProductCount(response?.total);
+    setSkip(docToSkip);
+  }
+
+  async function handlePageNoDecrement() {
+    const docToSubtract = skip - limit;
+    const response = await getProductsService({
+      skip: docToSubtract,
+      limit,
+      search: searchQuery,
+    });
+    setProducts(response?.data);
+    setTotalProductCount(response?.total);
+    setSkip(docToSubtract);
   }
 
   return (
@@ -119,15 +174,19 @@ export default function AdminAddProductInventory() {
           <span>OBJECTS</span>
         </div>
         <div className={styles.paginationCounter}>
-          <span
-            className={`material-symbols-outlined ${styles.paginationSpan}`}
+          <button
+            className={`material-symbols-outlined ${styles.paginationSpan} ${styles.paginationButtons} ${freezePageDecrement && styles.freezeButton}`}
+            onClick={handlePageNoDecrement}
           >
-            chevron_left
-          </span>
-          {pageNumbers.length &&
-            pageNumbers.map((page) => {
+            <span>chevron_left</span>
+          </button>
+          {visiblePages.length &&
+            visiblePages.map((page) => {
               return (
-                <span className={styles.paginationSpan} key={page}>
+                <span
+                  className={`${styles.paginationSpan} ${page === currentPage && styles.highlightedPaginationSpan}`}
+                  key={page}
+                >
                   {page}
                 </span>
               );
@@ -139,11 +198,12 @@ export default function AdminAddProductInventory() {
           </span>
           <span className={styles.paginationSpan}>2</span>
           <span className={styles.paginationSpan}>3</span> */}
-          <span
-            className={`material-symbols-outlined ${styles.paginationSpan}`}
+          <button
+            className={`material-symbols-outlined ${styles.paginationSpan} ${styles.paginationButtons} ${freezePageIncrement && styles.freezeButton}`}
+            onClick={handlePageNoIncrement}
           >
-            chevron_right
-          </span>
+            <span>chevron_right</span>
+          </button>
         </div>
       </div>
     </div>
