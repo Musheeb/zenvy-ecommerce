@@ -200,3 +200,13 @@ table {
   background-color: #474747;
   color: white;
 }
+
+/* .paginationButtons{
+  background-color: #999;
+} */
+
+.freezeButton{
+  opacity: 0.1;
+  cursor: not-allowed;
+  pointer-events: none;
+}
