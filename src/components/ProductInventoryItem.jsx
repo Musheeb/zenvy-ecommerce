@@ -6,7 +6,7 @@ export default function ProductInventoryItem(props) {
       <tr key={props._id}>
         <td>
           <img
-            src={props.images[0]?.url}
+            src={props.images[0]?.url ?? "/ZenvyLogoSober1.png"}
             alt={props.productTitle}
             className={styles.productImage}
           />
