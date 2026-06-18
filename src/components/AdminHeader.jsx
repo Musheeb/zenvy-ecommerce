@@ -6,7 +6,7 @@ import { ROUTES } from "../routes/routes";
 import { useUnderConstructionNavigation } from "../hooks/useUnderConstructionNavigation";
 import { useDashboardNavigation } from "../hooks/useDashboardNavigation";
 
-export default function AdminHeader() {
+export default function AdminHeader(props) {
   const location = useLocation();
   const path = location.pathname;
   const goToUnderConstruction = useUnderConstructionNavigation();
@@ -54,6 +54,11 @@ export default function AdminHeader() {
               type="text"
               placeholder="Search Inventory"
               className={styles.inventorySearchBox}
+              value={props.searchQueryState}
+              onChange={(e) => {
+                const { value } = e.target;
+                props.handleSearchQuery(value);
+              }}
             />
           </div>
         )}

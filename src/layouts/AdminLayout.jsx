@@ -8,6 +8,7 @@ import { useState } from "react";
 import { ROUTES } from "../routes/routes";
 
 export default function AdminLayout() {
+  const [search, setSearch] = useState("");
   const location = useLocation();
   const path = location.pathname;
 
@@ -44,6 +45,8 @@ export default function AdminLayout() {
         <AdminHeader
           selectedOption={selectedOption}
           handleSelectedOption={handleSelectedOption}
+          searchQueryState={search}
+          handleSearchQuery={setSearch}
         />
       </div>
       <div className={styles.mainContentContainer}>
@@ -54,7 +57,7 @@ export default function AdminLayout() {
           />
         </div>
         <div className={styles.mainContentWrapper}>
-          <Outlet />
+          <Outlet context={{ search }} />
         </div>
       </div>
     </div>

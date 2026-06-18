@@ -2,6 +2,7 @@ import styles from "../styles/AdminAddProductInventory.module.css";
 import toast from "react-hot-toast";
 import { ROUTES } from "../routes/routes";
 import { useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
 
 import ProductInventoryItem from "../components/ProductInventoryItem";
 import Loader from "../components/Loader";
@@ -19,9 +20,10 @@ export default function AdminAddProductInventory() {
   const goToEditProductDetail = useEditProductDetailsNavigation();
   const goToAddNewProductDetail = useAddNewProductNavigation();
 
+  const { search } = useOutletContext();
+
   const [skip, setSkip] = useState(0);
   const [limit, setLimit] = useState(10);
-  const [searchQuery, setSearchQuery] = useState("");
   const [totalProductCount, setTotalProductCount] = useState(0);
   const [products, setProducts] = useState([]);
   const [loader, setLoader] = useState(false);
@@ -59,14 +61,14 @@ export default function AdminAddProductInventory() {
       const response = await getProductsService({
         skip,
         limit,
-        search: searchQuery,
+        search,
       });
       setProducts(response?.data);
       setTotalProductCount(response?.total);
       setFreezePageDecrement(true);
     }
     getProducts();
-  }, [totalProductCount]);
+  }, [totalProductCount, search]);
 
   async function handleProductDelete(productId) {
     setLoader(true);
@@ -89,7 +91,7 @@ export default function AdminAddProductInventory() {
     const response = await getProductsService({
       skip: docToSkip,
       limit,
-      search: searchQuery,
+      search,
     });
     setProducts(response?.data);
     setTotalProductCount(response?.total);
@@ -101,7 +103,7 @@ export default function AdminAddProductInventory() {
     const response = await getProductsService({
       skip: docToSubtract,
       limit,
-      search: searchQuery,
+      search,
     });
     setProducts(response?.data);
     setTotalProductCount(response?.total);
