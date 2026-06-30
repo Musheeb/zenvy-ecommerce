@@ -24,10 +24,7 @@ export default function ProductInventoryItem(props) {
             props.quantity > 5 ? styles.inStockWrapper : styles.lowStockWrapper
           }
         >
-          {props.stockStatus === "available" && props.quantity > 5
-            ? "IN STOCK"
-            : "LOW STOCK"}{" "}
-          ({props.quantity})
+          {props.quantity > 5 ? "IN STOCK" : "LOW STOCK"} ({props.quantity})
         </td>
         <td>
           <div className={styles.actionWrapper}>
