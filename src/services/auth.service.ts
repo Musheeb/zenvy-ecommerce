@@ -1,7 +1,13 @@
 import api from "../api/axios";
 import API_ROUTES from "../api/apiEndpoints";
 
-export const registerUserService = async ({ username, password, email }) => {
+import type { RegisterUserPayload } from "../types/auth.types";
+
+export const registerUserService = async ({
+  username,
+  password,
+  email,
+}: RegisterUserPayload) => {
   try {
     const { data } = await api.post(API_ROUTES.auth.register, {
       username,
