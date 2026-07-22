@@ -17,8 +17,6 @@ import UserHome from "../pages/UserHome";
 import PageNotFound from "../pages/PageNotFound";
 import UnderConstruction from "../pages/UnderConstruction";
 
-import { ROUTES } from "./routes";
-
 export const router = createBrowserRouter([
   {
     path: "/",
