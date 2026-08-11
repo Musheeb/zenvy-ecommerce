@@ -1,12 +1,14 @@
 import styles from "../styles/Login.module.css";
 
-import { useState } from "react";
+import { useState, type ChangeEvent, type MouseEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { ROUTES } from "../routes/routes";
 import toast from "react-hot-toast";
 
 import { loginUserService } from "../services/auth.service";
+
+import { isAxiosError } from "axios";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ export default function Login() {
     setShowPassword((prev) => !prev);
   }
 
-  function handleUserInput(event) {
+  function handleUserInput(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
     setUserCredentials((prev) => {
       return {
@@ -33,7 +35,7 @@ export default function Login() {
     });
   }
 
-  async function handleLogin(event) {
+  async function handleLogin(event: MouseEvent<HTMLButtonElement>) {
     try {
       event.preventDefault();
       if (isLoading) return;
@@ -46,8 +48,13 @@ export default function Login() {
       localStorage.setItem("accessToken", response?.accessToken);
       toast.success(response.message);
       navigate(ROUTES.ADMIN_DASHBOARD); //Redirect to dahsboard according to user's role.
-    } catch (e) {
-      toast.error(e.message || "Something went wrong");
+    } catch (e: unknown) {
+      if (isAxiosError(e)) {
+        console.log("Axios Error: ", e.message);
+      } else {
+        console.log(e);
+      }
+      toast.error("Something went wrong");
       setUserCredentials(userInput);
     } finally {
       setIsLoading(false); // Don't forget to set this isLoading false on logout.

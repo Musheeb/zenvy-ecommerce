@@ -1,4 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  type RefObject,
+  type ChangeEvent,
+} from "react";
 import styles from "../styles/AdminEditProductDetails.module.css";
 import toast from "react-hot-toast";
 
@@ -13,14 +19,19 @@ import { useInventoryNavigation } from "../hooks/navigation";
 import { addProductService } from "../services/product.service";
 import userSchema from "../schemas/addProductSchema";
 
+import type { CategoryValidate } from "../types/category.types.ts";
+import type { SelectedImage } from "../types/product.types.ts";
+
+import { isAxiosError } from "axios";
+
 export default function AdminEditProductDetails() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showNewCategoryInput, setShowNewCategoryInput] = useState(false);
   const [showCategoryList, setShowCategoryList] = useState(false);
   const [newCategory, setNewCategory] = useState("");
-  const imagesDefaultState = [null, null, null, null];
+  const imagesDefaultState: (SelectedImage | null)[] = [null, null, null, null];
   const [images, setImages] = useState(imagesDefaultState);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<CategoryValidate[]>([]);
   const [deleteCategoryConfirmation, setDeleteCategoryConfirmation] =
     useState(false);
   const [addProductLoader, setAddPorductLoader] = useState(false);
@@ -39,22 +50,23 @@ export default function AdminEditProductDetails() {
 
   const [payload, setPayload] = useState(defaultPayloadState);
 
-  const categoryInputRef = useRef(null);
-  const categoryInputBoxRef = useRef(null);
-  const deleteConfirmationBoxRef = useRef(null);
+  const categoryInputRef = useRef<HTMLDivElement>(null);
+  const categoryInputBoxRef = useRef<HTMLInputElement>(null);
+  const deleteConfirmationBoxRef = useRef<HTMLDivElement>(null);
 
-  const fileInputRef = useRef(null);
-  const fileInputRef2 = useRef(null);
-  const fileInputRef3 = useRef(null);
-  const fileInputRef4 = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const fileInputRef2 = useRef<HTMLInputElement | null>(null);
+  const fileInputRef3 = useRef<HTMLInputElement | null>(null);
+  const fileInputRef4 = useRef<HTMLInputElement | null>(null);
 
   const goToInventory = useInventoryNavigation();
 
   //To handle category mouse click effect.
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
       if (
         categoryInputRef.current &&
+        event.target instanceof Node &&
         !categoryInputRef.current.contains(event.target)
       ) {
         setShowNewCategoryInput(false);
@@ -70,9 +82,10 @@ export default function AdminEditProductDetails() {
 
   //To handle delete category confirmation box.
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
       if (
         deleteConfirmationBoxRef.current &&
+        event.target instanceof Node &&
         !deleteConfirmationBoxRef.current.contains(event.target)
       ) {
         setDeleteCategoryConfirmation(false);
@@ -89,6 +102,9 @@ export default function AdminEditProductDetails() {
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     async function getCategories() {
+      if (!token) {
+        return;
+      }
       const categoriesList = await getAllCategoriesService({ token });
       // console.log(categoriesList);/
       setCategories(categoriesList?.data?.data || []);
@@ -108,6 +124,9 @@ export default function AdminEditProductDetails() {
         return toast.error("Category can not be empty");
       }
       const token = localStorage.getItem("accessToken");
+      if (!token) {
+        return;
+      }
       const response = await addNewCategoryService({ newCategory, token });
       toast.success(response.data.message);
       setShowNewCategoryInput(false);
@@ -127,18 +146,26 @@ export default function AdminEditProductDetails() {
         };
       });
       return;
-    } catch (e) {
-      toast.error(
-        e.message || "Something went wrong while adding new category",
-      );
+    } catch (e: unknown) {
+      if (isAxiosError(e)) {
+        console.log("Axios Error: ", e.message);
+      } else {
+        console.log(e);
+      }
+      toast.error("Something went wrong while adding new category");
     }
   }
 
-  function handleImageCardClick(ref) {
+  function handleImageCardClick(ref: RefObject<HTMLInputElement | null>) {
+    if (ref.current === null) return;
     ref.current.click();
   }
 
-  function handleImageSelection(index, event) {
+  function handleImageSelection(
+    index: number,
+    event: ChangeEvent<HTMLInputElement>,
+  ) {
+    if (!event.target.files?.length) return;
     const file = event.target.files[0];
     if (!file) return;
 
@@ -152,7 +179,9 @@ export default function AdminEditProductDetails() {
     setImages(updatedImages);
   }
 
-  function handlePayload(event) {
+  function handlePayload(
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) {
     const { name, value } = event.target;
     setPayload((prev) => {
       return {
@@ -172,12 +201,18 @@ export default function AdminEditProductDetails() {
       });
       // console.log("Validate payload -> ", validatePayload);
       if (!validatePayload.success) {
-        const firstError = validatePayload.error.issues[0].message;
-        toast.error(firstError);
+        const firstError = validatePayload.error.issues[0]?.message;
+        toast.error(firstError || "Invalid product details");
         setAddPorductLoader(false);
         return;
       }
-      const response = await addProductService({ payload, images });
+      const selectedImages = images.filter((image): image is SelectedImage => {
+        return image !== null;
+      });
+      const response = await addProductService({
+        payload,
+        images: selectedImages,
+      });
       if (response) {
         setImages(imagesDefaultState);
         setPayload(defaultPayloadState);
@@ -185,9 +220,14 @@ export default function AdminEditProductDetails() {
         setAddPorductLoader(false);
         return toast.success(response.data.message);
       }
-    } catch (e) {
+    } catch (e: unknown) {
       setAddPorductLoader(false);
-      return toast.error(e.message || "Something went wrong");
+      if (isAxiosError(e)) {
+        console.log("Axios Error: ", e.message);
+      } else {
+        console.log(e);
+      }
+      return toast.error("Something went wrong");
     }
   }
 
@@ -206,8 +246,13 @@ export default function AdminEditProductDetails() {
       setCategories(fileteredCategory);
       setDeleteCategoryLoader(false);
       return toast.success(response.message);
-    } catch (e) {
-      return toast.error(e.message || "Something went wrong");
+    } catch (e: unknown) {
+      if (isAxiosError(e)) {
+        console.log("Axios Error: ", e.message);
+      } else {
+        console.log(e);
+      }
+      return toast.error("Something went wrong");
     }
   }
 
