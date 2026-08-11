@@ -2,18 +2,20 @@ import styles from "../styles/ResetPassword.module.css";
 import toast from "react-hot-toast";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 
 import { resetPasswordService } from "../services/auth.service";
 import { ROUTES } from "../routes/routes";
 
+import { isAxiosError } from "axios";
+
 export default function ResetPassword() {
-  const { token } = useParams();
+  const { token } = useParams<{ token: string }>();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmNewPassword] = useState("");
   const navigate = useNavigate();
 
-  function handleInput(event) {
+  function handleInput(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
     if (name === "password") {
       setPassword(value);
@@ -23,6 +25,10 @@ export default function ResetPassword() {
   }
 
   async function handleUpdateAccess() {
+    if (!token) {
+      toast.error("Invalid or missing reset token");
+      return;
+    }
     if (!password || !confirmPassword) {
       toast.error("New password or Confirm password can not be empty!");
       return;
@@ -42,8 +48,12 @@ export default function ResetPassword() {
       setConfirmNewPassword("");
       navigate(ROUTES.LOGIN);
       return;
-    } catch (e) {
-      toast.error(e.message || "Something went wrong");
+    } catch (e: unknown) {
+      if (isAxiosError(e)) {
+        console.log("Axios Error: ", e.message);
+      }
+      console.log(e);
+      toast.error("Something went wrong");
     }
   }
 

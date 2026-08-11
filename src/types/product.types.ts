@@ -17,3 +17,8 @@ export interface GetProductsListPayload {
 export interface DeleteProductPayload {
   productId: string;
 }
+
+export interface SelectedImage {
+  file: File;
+  preview: string;
+}

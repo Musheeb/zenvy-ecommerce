@@ -1,9 +1,9 @@
 import api from "../api/axios";
 import API_ROUTES from "../api/apiEndpoints";
 
-import type { isAxiosError } from "axios";
 import type {
   AddCategoryPayload,
+  GetCategroyPayload,
   DeleteCategoryPayload,
 } from "../types/category.types.ts";
 
@@ -39,7 +39,7 @@ export const addNewCategoryService = async ({
 
 export const getAllCategoriesService = async ({
   token,
-}: AddCategoryPayload) => {
+}: GetCategroyPayload) => {
   try {
     const response = await api.get(API_ROUTES.category.getCategories, {
       headers: {

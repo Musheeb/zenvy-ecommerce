@@ -3,8 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import { ROUTES } from "../routes/routes";
-import { useState } from "react";
+import { useState, type ChangeEvent, type SubmitEvent } from "react";
 import { registerUserService } from "../services/auth.service";
+
+import { isAxiosError } from "axios";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ export default function Register() {
 
   const { username, email, password } = registrationData;
 
-  function handleChange(event) {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
     setRegistrationData((prev) => {
       return {
@@ -29,7 +31,7 @@ export default function Register() {
     });
   }
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
     if (isLoading) return;
     if (!username || !email || !password) {
@@ -43,8 +45,14 @@ export default function Register() {
       setRegistrationData(initialFormState);
       // Check if the role is admin or user and then act accordingly.
       navigate(ROUTES.ADMIN_DASHBOARD);
-    } catch (e) {
-      toast.error(e.message || "Something went wrong");
+    } catch (e: unknown) {
+      if (isAxiosError(e)) {
+        console.log("Axios Error: ", e.message);
+      }
+      {
+        console.log(e);
+      }
+      toast.error("Something went wrong");
     } finally {
       setIsLoading(true);
     }

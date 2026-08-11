@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import styles from "../styles/ForgotPassword.module.css";
 
 import { ROUTES } from "../routes/routes";
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 
 import { forgotPasswordService } from "../services/auth.service";
+
+import { isAxiosError } from "axios";
 
 export default function ForgotPassword() {
   const [sendResetLink, setSendResetLink] = useState(false);
@@ -31,9 +33,14 @@ export default function ForgotPassword() {
       setEmail("");
       toast.success(response.message);
       return;
-    } catch (e) {
+    } catch (e: unknown) {
       setIsLoading(false);
-      toast.error(e.message || "Something went wrong");
+      if (isAxiosError(e)) {
+        console.log("Axios Error: ", e.message);
+      } else {
+        console.log(e);
+      }
+      toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
     }
@@ -43,7 +50,7 @@ export default function ForgotPassword() {
     setSendResetLink(false);
   }
 
-  function handleEmailInput(event) {
+  function handleEmailInput(event: ChangeEvent<HTMLInputElement>) {
     const { value } = event.target;
     setEmail(value);
   }
