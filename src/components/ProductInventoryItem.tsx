@@ -1,6 +1,8 @@
 import styles from "../styles/AdminAddProductInventory.module.css";
 
-export default function ProductInventoryItem(props) {
+import type { Product } from "../types/product.types.ts";
+
+export default function ProductInventoryItem(props: Product) {
   return (
     <>
       <tr key={props._id}>
@@ -17,7 +19,7 @@ export default function ProductInventoryItem(props) {
             <span className={styles.productSku}>{props.sku}</span>
           </div>
         </td>
-        <td>{props.category}</td>
+        <td>{props.categoryName}</td>
         <td>{`${props.currency === "USD" ? "$" : "INR - "}${props.price}`}</td>
         <td
           className={

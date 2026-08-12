@@ -16,16 +16,18 @@ import {
   deleteProductService,
 } from "../services/product.service";
 
+import type { AddProductParams, Product } from "../types/product.types.ts";
+
 export default function AdminAddProductInventory() {
   const goToEditProductDetail = useEditProductDetailsNavigation();
   const goToAddNewProductDetail = useAddNewProductNavigation();
 
-  const { search } = useOutletContext();
+  const { search } = useOutletContext<AddProductParams>();
 
   const [skip, setSkip] = useState(0);
   const [limit, setLimit] = useState(10);
   const [totalProductCount, setTotalProductCount] = useState(0);
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [loader, setLoader] = useState(false);
 
   // const [currentPage, setCurrentPage] = useState(Math.floor(skip / limit + 1));
@@ -70,7 +72,7 @@ export default function AdminAddProductInventory() {
     getProducts();
   }, [totalProductCount, search]);
 
-  async function handleProductDelete(productId) {
+  async function handleProductDelete(productId: string) {
     setLoader(true);
     const response = await deleteProductService({ productId: productId });
     toast.success(response?.message);
@@ -147,7 +149,7 @@ export default function AdminAddProductInventory() {
                     productTitle={product.productTitle}
                     images={product.images}
                     sku={product.sku}
-                    category={product.categoryName}
+                    categoryName={product.categoryName ?? ""}
                     price={product.price}
                     quantity={product.quantity}
                     currency={product.currency}
