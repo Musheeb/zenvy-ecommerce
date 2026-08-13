@@ -7,12 +7,14 @@ import { useState } from "react";
 
 import { ROUTES } from "../routes/routes";
 
+import type { DefaultRoutes } from "../types/pages.types.ts";
+
 export default function AdminLayout() {
   const [search, setSearch] = useState("");
   const location = useLocation();
   const path = location.pathname;
 
-  const DEFAULT_OPTIONS = {
+  const DEFAULT_OPTIONS: DefaultRoutes = {
     //Navbar options.
     dashboard: false,
     collections: false,
@@ -30,7 +32,7 @@ export default function AdminLayout() {
     dashboard: path === ROUTES.ADMIN_DASHBOARD,
   });
 
-  function handleSelectedOption(targetedOption) {
+  function handleSelectedOption(targetedOption: object) {
     setSelectedOption((prev) => {
       return {
         ...DEFAULT_OPTIONS,
