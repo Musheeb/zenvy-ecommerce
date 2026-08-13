@@ -7,7 +7,9 @@ import { useUnderConstructionNavigation } from "../hooks/useUnderConstructionNav
 import { useDashboardNavigation } from "../hooks/useDashboardNavigation";
 import { useInventoryNavigation } from "../hooks/navigation";
 
-export default function SideBar(props) {
+import type { SideBarProps } from "../types/pages.types.ts";
+
+export default function SideBar(props: SideBarProps) {
   const goToUnderConstruction = useUnderConstructionNavigation();
   const goToDashboard = useDashboardNavigation();
   const goToInventory = useInventoryNavigation();
