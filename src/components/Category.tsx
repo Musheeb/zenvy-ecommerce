@@ -1,12 +1,14 @@
 import styles from "../styles/Category.module.css";
 
-export default function Category(props) {
+import type { ShowCategory } from "../types/category.types.ts";
+
+export default function Category(props: ShowCategory) {
   return (
     <div
       className={styles.singleCategoryWrapper}
       onClick={() => {
         props.selectCategory(props.label);
-        props.handleCategoryList();
+        props.handleCategoryList(false);
         props.setPayload((prev) => {
           return {
             ...prev,
@@ -15,7 +17,7 @@ export default function Category(props) {
         });
       }}
     >
-      <span value={props.value}>{props.label}</span>
+      <span>{props.label}</span>
       <span
         className={`material-symbols-outlined ${styles.deleteCategoryBin}`}
         onClick={(e) => {

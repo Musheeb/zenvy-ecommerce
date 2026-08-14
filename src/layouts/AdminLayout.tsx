@@ -10,7 +10,7 @@ import { ROUTES } from "../routes/routes";
 import type { DefaultRoutes } from "../types/pages.types.ts";
 
 export default function AdminLayout() {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<string>("");
   const location = useLocation();
   const path = location.pathname;
 

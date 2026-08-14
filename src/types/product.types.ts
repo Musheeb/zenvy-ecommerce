@@ -36,6 +36,29 @@ export interface Images {
   _id: string;
 }
 
+export interface ProductAsPayload {
+  _id: string;
+  productTitle: string;
+  images: Images[];
+  sku: string;
+  categoryName: string;
+  price: string;
+  quantity: number;
+  currency: string;
+}
+
+export interface DefaultProduct {
+  _id?: string;
+  productTitle: string;
+  images?: Images[];
+  sku: string;
+  category: string;
+  price: string;
+  quantity: number;
+  currency: string;
+  description: string;
+}
+
 export interface Product {
   _id: string;
   productTitle: string;

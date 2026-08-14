@@ -21,24 +21,27 @@ import userSchema from "../schemas/addProductSchema";
 
 import type { CategoryValidate } from "../types/category.types.ts";
 import type { SelectedImage } from "../types/product.types.ts";
+import type { DefaultProduct } from "../types/product.types.ts";
 
 import { isAxiosError } from "axios";
 
 export default function AdminEditProductDetails() {
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [showNewCategoryInput, setShowNewCategoryInput] = useState(false);
-  const [showCategoryList, setShowCategoryList] = useState(false);
-  const [newCategory, setNewCategory] = useState("");
+  const [showNewCategoryInput, setShowNewCategoryInput] =
+    useState<boolean>(false);
+  const [showCategoryList, setShowCategoryList] = useState<boolean>(false);
+  const [newCategory, setNewCategory] = useState<string>("");
   const imagesDefaultState: (SelectedImage | null)[] = [null, null, null, null];
   const [images, setImages] = useState(imagesDefaultState);
   const [categories, setCategories] = useState<CategoryValidate[]>([]);
   const [deleteCategoryConfirmation, setDeleteCategoryConfirmation] =
     useState(false);
-  const [addProductLoader, setAddPorductLoader] = useState(false);
-  const [deleteCategoryLoader, setDeleteCategoryLoader] = useState(false);
-  const [categoryToDelete, setCategoryToDelete] = useState("");
+  const [addProductLoader, setAddPorductLoader] = useState<boolean>(false);
+  const [deleteCategoryLoader, setDeleteCategoryLoader] =
+    useState<boolean>(false);
+  const [categoryToDelete, setCategoryToDelete] = useState<string>("");
 
-  const defaultPayloadState = {
+  const defaultPayloadState: DefaultProduct = {
     productTitle: "",
     category: "",
     sku: "",
@@ -48,7 +51,9 @@ export default function AdminEditProductDetails() {
     currency: "USD",
   };
 
-  const [payload, setPayload] = useState(defaultPayloadState);
+  const [payload, setPayload] = useState<DefaultProduct>(
+    defaultPayloadState || {},
+  );
 
   const categoryInputRef = useRef<HTMLDivElement>(null);
   const categoryInputBoxRef = useRef<HTMLInputElement>(null);
