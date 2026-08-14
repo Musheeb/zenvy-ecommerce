@@ -1,10 +1,12 @@
 import styles from "../styles/ActivityCard.module.css";
 
-export default function ActivityCard(props) {
+import type { Activity } from "../types/activity.types.ts";
+
+export default function ActivityCard(props: Activity) {
   const mutatedTime = new Date(props.timestamp).toLocaleString("en-IN", {
     hour12: false,
   });
-  const date = mutatedTime.split(" ")[0];
+  const date = mutatedTime.split(" ")[0] ?? "";
   const cleanedDate = date.endsWith(",") ? date.slice(0, -1) : date;
   const time = mutatedTime.split(" ")[1];
   return (
