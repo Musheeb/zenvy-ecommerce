@@ -1,6 +1,6 @@
 import styles from "../styles/AdminEditProductDetails.module.css";
 
-export default function ImageUpload(props) {
+export default function ImageUpload(props: any) {
   return (
     <div>
       <input

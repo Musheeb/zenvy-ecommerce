@@ -14,5 +14,5 @@ export interface DefaultRoutes {
 
 export interface SideBarProps {
   selectedOption: DefaultRoutes;
-  handleSelectedOption: (event: Partial<DefaultRoutes>) => object;
+  handleSelectedOption: (event: Partial<DefaultRoutes>) => void;
 }

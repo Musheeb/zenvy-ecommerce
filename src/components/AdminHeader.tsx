@@ -6,7 +6,9 @@ import { ROUTES } from "../routes/routes";
 import { useUnderConstructionNavigation } from "../hooks/useUnderConstructionNavigation";
 import { useDashboardNavigation } from "../hooks/useDashboardNavigation";
 
-export default function AdminHeader(props) {
+import type { AdminHeader } from "../types/admin.types";
+
+export default function AdminHeader(props: AdminHeader) {
   const location = useLocation();
   const path = location.pathname;
   const goToUnderConstruction = useUnderConstructionNavigation();
