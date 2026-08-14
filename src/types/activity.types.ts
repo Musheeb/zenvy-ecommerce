@@ -1,7 +1,7 @@
 export interface Activity {
-  key: string;
-  id: string;
-  timestamp: Date;
+  key: number;
+  id: number;
+  timestamp: string;
   title: string;
   body: string;
   icon: string;
