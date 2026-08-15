@@ -1,5 +1,7 @@
 import styles from "../styles/AdminDashboard.module.css";
 
+import { useState } from "react";
+
 import { useUnderConstructionNavigation } from "../hooks/useUnderConstructionNavigation";
 import { useAddNewProductNavigation } from "../hooks/navigation";
 
@@ -32,6 +34,8 @@ const activityData = [
 export default function AdminDashboard() {
   const goToUnderConstruction = useUnderConstructionNavigation();
   const goToAddNewProductDetail = useAddNewProductNavigation();
+  const [lowStock, setLowStock] = useState<number>(0);
+  const [newArrivals, setNewArrivals] = useState<number>(0);
   return (
     <div className={styles.container}>
       <div className={styles.dashboardTopContent}>

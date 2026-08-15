@@ -24,11 +24,11 @@ export default function AdminAddProductInventory() {
 
   const { search } = useOutletContext<AddProductParams>();
 
-  const [skip, setSkip] = useState(0);
-  const [limit, setLimit] = useState(10);
-  const [totalProductCount, setTotalProductCount] = useState(0);
+  const [skip, setSkip] = useState<number>(0);
+  const [limit, setLimit] = useState<number>(10);
+  const [totalProductCount, setTotalProductCount] = useState<number>(0);
   const [products, setProducts] = useState<Product[]>([]);
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState<boolean>(false);
 
   // const [currentPage, setCurrentPage] = useState(Math.floor(skip / limit + 1));
   const currentPage = Math.floor(skip / limit) + 1;

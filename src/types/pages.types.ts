@@ -1,5 +1,3 @@
-import type { MouseEvent } from "react";
-
 export interface DefaultRoutes {
   dashboard: boolean;
   collections: boolean;
