@@ -9,13 +9,29 @@ const api = axios.create({
 
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem("accessToken");
-      toast.error("Session expired. Please log in again.");
-      setTimeout(() => {
-        window.location.href = ROUTES.LOGIN;
-      }, 2000);
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        //make the API call here to get a new access token.
+        const { data } = await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/${ROUTES.AUTH_REFRESH}`,
+          {},
+          {
+            withCredentials: true,
+          },
+        );
+        localStorage.setItem("accessToken", data.accessToken);
+        // return the original api here.
+        return api(originalRequest);
+      } catch (refreshError) {
+        localStorage.removeItem("accessToken");
+        toast.error("Session expired. Please log in again.");
+        setTimeout(() => {
+          window.location.href = ROUTES.LOGIN;
+        }, 2000);
+      }
     }
     return Promise.reject(error);
   },

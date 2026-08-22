@@ -8,4 +8,6 @@ export const ROUTES = {
   ADMIN_DASHBOARD: "/admin/dashboard",
   ADMIN_INVENTORY: "/admin/inventory",
   ADMIN_EDIT_PRODUCT: "/admin/edit-product-details",
+  //Refresh token
+  AUTH_REFRESH: "/auth/refreshToken",
 };
