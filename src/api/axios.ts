@@ -7,6 +7,14 @@ const api = axios.create({
   withCredentials: true,
 });
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("accessToken");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -14,9 +22,9 @@ api.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        //make the API call here to get a new access token.
+        //make an API call to get a new access token.
         const { data } = await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/${ROUTES.AUTH_REFRESH}`,
+          `${import.meta.env.VITE_API_BASE_URL}${ROUTES.AUTH_REFRESH}`,
           {},
           {
             withCredentials: true,
