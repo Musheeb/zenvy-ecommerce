@@ -64,6 +64,7 @@ export const getProductsService = async ({
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        withCredentials: true,
       },
     );
     return response?.data;
