@@ -9,20 +9,11 @@ import type {
 
 export const addNewCategoryService = async ({
   newCategory,
-  token,
 }: AddCategoryPayload) => {
   try {
-    const response = await api.post(
-      API_ROUTES.category.addCategory,
-      {
-        name: newCategory,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
+    const response = await api.post(API_ROUTES.category.addCategory, {
+      name: newCategory,
+    });
     return response;
   } catch (e: any) {
     console.log(
@@ -37,15 +28,9 @@ export const addNewCategoryService = async ({
   }
 };
 
-export const getAllCategoriesService = async ({
-  token,
-}: GetCategroyPayload) => {
+export const getAllCategoriesService = async () => {
   try {
-    const response = await api.get(API_ROUTES.category.getCategories, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await api.get(API_ROUTES.category.getCategories);
     return response;
   } catch (e: any) {
     console.log(
@@ -62,14 +47,8 @@ export const getAllCategoriesService = async ({
 
 export const deleteCategory = async ({ categoryId }: DeleteCategoryPayload) => {
   try {
-    const token = localStorage.getItem("accessToken");
     const response = await api.delete(
       API_ROUTES.category.deleteCategory(categoryId),
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
     );
     return response.data;
   } catch (e: any) {

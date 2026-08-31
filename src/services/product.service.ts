@@ -26,9 +26,7 @@ export const addProductService = async ({
       formData.append("images", image.file);
     });
     const response = await api.post(API_ROUTES.product.addProduct, formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: {},
     });
     return response;
   } catch (e: any) {
@@ -61,9 +59,7 @@ export const getProductsService = async ({
     const response = await api.get(
       API_ROUTES.product.getProducts(skip, limit, search),
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: {},
         withCredentials: true,
       },
     );
@@ -89,7 +85,6 @@ export const deleteProductService = async ({
   productId,
 }: DeleteProductPayload) => {
   try {
-    console.log("delete product service method called!");
     const token = localStorage.getItem("accessToken");
     if (!token) {
       toast.error("Session expired. Please log in again");
@@ -97,9 +92,7 @@ export const deleteProductService = async ({
     const response = await api.delete(
       API_ROUTES.product.deleteProduct(productId),
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: {},
       },
     );
     return response?.data;

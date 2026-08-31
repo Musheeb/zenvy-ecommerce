@@ -8,10 +8,15 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("accessToken");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  if (config.skipAuth) {
+    // This will be used when we have to use and endpoint which does not require any authentication.
+    return config;
   }
+  const token = localStorage.getItem("accessToken");
+  if (!token) {
+    toast.error("Session expired. Please log in again");
+  }
+  config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
