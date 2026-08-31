@@ -3,7 +3,6 @@ import type { DefaultProduct } from "./product.types.ts";
 
 export interface AddCategoryPayload {
   newCategory: string;
-  token: string;
 }
 
 export interface GetCategroyPayload {

@@ -105,13 +105,8 @@ export default function AdminEditProductDetails() {
 
   //To get all the categories.
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
     async function getCategories() {
-      if (!token) {
-        return;
-      }
-      const categoriesList = await getAllCategoriesService({ token });
-      // console.log(categoriesList);/
+      const categoriesList = await getAllCategoriesService();
       setCategories(categoriesList?.data?.data || []);
     }
     getCategories();
@@ -128,11 +123,7 @@ export default function AdminEditProductDetails() {
       if (!newCategory) {
         return toast.error("Category can not be empty");
       }
-      const token = localStorage.getItem("accessToken");
-      if (!token) {
-        return;
-      }
-      const response = await addNewCategoryService({ newCategory, token });
+      const response = await addNewCategoryService({ newCategory });
       toast.success(response.data.message);
       setShowNewCategoryInput(false);
       const catWithNewlyAddedCat = [
