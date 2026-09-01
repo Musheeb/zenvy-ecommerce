@@ -1,5 +1,6 @@
 export const ROUTES = {
   UNDER_CONSTRUCTION: "/under-construction",
+  DASHBOARD_STATISTICS: "/get-statistics",
 
   REGISTER: "/register",
   LOGIN: "/login",

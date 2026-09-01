@@ -7,3 +7,9 @@ export interface AdminHeader {
   searchQueryState: string;
   handleSearchQuery: Dispatch<SetStateAction<string>>;
 }
+
+export interface DashboardData {
+  lowStockCount: number;
+  newArrivalsCount: number;
+  inventoryItemsCount: number;
+}
