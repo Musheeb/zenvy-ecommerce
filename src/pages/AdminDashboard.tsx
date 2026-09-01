@@ -1,11 +1,14 @@
 import styles from "../styles/AdminDashboard.module.css";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useUnderConstructionNavigation } from "../hooks/useUnderConstructionNavigation";
 import { useAddNewProductNavigation } from "../hooks/navigation";
+import { getDashboardStats } from "../services/admin.service";
 
 import ActivityCard from "../components/ActivityCard";
+
+import type { DashboardData } from "../types/admin.types";
 
 const activityData = [
   {
@@ -34,8 +37,24 @@ const activityData = [
 export default function AdminDashboard() {
   const goToUnderConstruction = useUnderConstructionNavigation();
   const goToAddNewProductDetail = useAddNewProductNavigation();
-  const [lowStock, setLowStock] = useState<number>(0);
-  const [newArrivals, setNewArrivals] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [dashboardStatistic, setDashboardStatistic] =
+    useState<DashboardData | null>(null);
+  const currentTime = new Date();
+  useEffect(() => {
+    async function getDashBoardStatistics() {
+      try {
+        setIsLoading(true);
+        const dashboardData = await getDashboardStats();
+        setDashboardStatistic(dashboardData);
+      } catch (e: unknown) {
+        console.log("Failed to fetch dashboard statistics", e);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    getDashBoardStatistics();
+  }, []);
   return (
     <div className={styles.container}>
       <div className={styles.dashboardTopContent}>
@@ -46,7 +65,7 @@ export default function AdminDashboard() {
           <h1 className={styles.dashboardHeading}>Curated Dashboard</h1>
         </div>
         <span className={styles.dashboardLastSync}>
-          Last synced: 26 April 2026, 14:30{" "}
+          Last synced: {currentTime.toLocaleString()}
         </span>
       </div>
       <div className={styles.dashboardMiddleContent}>
@@ -73,7 +92,9 @@ export default function AdminDashboard() {
         >
           <span className={`${styles.cardTopTexts}`}>INVENTORY ITEMS</span>
           <div className={styles.cardStatWrapper}>
-            <span className={`${styles.cardStats}`}>3,204</span>
+            <span className={`${styles.cardStats}`}>
+              {isLoading ? "⏳" : dashboardStatistic?.inventoryItemsCount}
+            </span>
             <span>SKUs</span>
           </div>
           <div className={styles.cardInventoryStockWrapper}>
@@ -81,13 +102,17 @@ export default function AdminDashboard() {
               className={`${styles.inventoryCardOptions}`}
               onClick={goToUnderConstruction}
             >
-              42 LOW STOCK
+              {isLoading
+                ? "⏳"
+                : `${dashboardStatistic?.lowStockCount} LOW STOCK`}
             </span>
             <span
               className={`${styles.inventoryCardOptions} ${styles.newArrivalInInventoryCard}`}
               onClick={goToUnderConstruction}
             >
-              12 NEW ARRIVALS
+              {isLoading
+                ? "⏳"
+                : `${dashboardStatistic?.newArrivalsCount} NEW ARRIVALS`}
             </span>
           </div>
         </div>
