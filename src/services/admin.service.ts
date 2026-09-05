@@ -4,6 +4,11 @@ import { isAxiosError } from "axios";
 
 import type { DashboardData } from "../types/admin.types";
 
+// Get dashboard statistics API call.
+/**
+ * 
+ * @returns - dasboard statistics object.
+ */
 export const getDashboardStats = async (): Promise<DashboardData> => {
   try {
     const dashboardData = await api.get(ROUTES.DASHBOARD_STATISTICS, {
